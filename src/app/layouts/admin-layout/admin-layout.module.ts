@@ -13,6 +13,7 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServicePackagesComponent } from 'src/app/pages/service-packages/service-packages.component';
+import { PackageDetailComponent } from 'src/app/pages/package-detail/package-detail.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { ServicePackagesComponent } from 'src/app/pages/service-packages/service
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
     ClipboardModule
@@ -30,7 +32,8 @@ import { ServicePackagesComponent } from 'src/app/pages/service-packages/service
     TablesComponent,
     IconsComponent,
     MapsComponent,
-    ServicePackagesComponent
+    ServicePackagesComponent,
+    PackageDetailComponent
   ]
 })
 

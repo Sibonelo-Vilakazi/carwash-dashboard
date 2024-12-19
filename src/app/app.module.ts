@@ -30,7 +30,6 @@ import { PackageDetailComponent } from './pages/package-detail/package-detail.co
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    PackageDetailComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

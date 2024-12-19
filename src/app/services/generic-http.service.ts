@@ -9,6 +9,8 @@ export class GenericHttpService {
   baseUrl = environment.baseUrl;
   constructor(private httpClient: HttpClient) { }
 
+  builderUrl = (url: string) =>  `${this.baseUrl}/${url}`
+
   httpGet(url: string): Observable<any>{
     return this.httpClient.get(`${this.baseUrl}/${url}`);
   }
