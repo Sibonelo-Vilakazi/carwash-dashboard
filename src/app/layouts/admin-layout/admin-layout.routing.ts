@@ -15,5 +15,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'service-packages',     component: ServicePackagesComponent },
-    { path: 'service-package/:service_id',     component: PackageDetailComponent }
+    { path: 'service-package/edit/:service_id',     component: PackageDetailComponent },
+    { path: 'service-package/create',     component: PackageDetailComponent }
 ];

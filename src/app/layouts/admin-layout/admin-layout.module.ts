@@ -14,6 +14,7 @@ import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServicePackagesComponent } from 'src/app/pages/service-packages/service-packages.component';
 import { PackageDetailComponent } from 'src/app/pages/package-detail/package-detail.component';
+import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/delete-modal.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -33,7 +34,8 @@ import { PackageDetailComponent } from 'src/app/pages/package-detail/package-det
     IconsComponent,
     MapsComponent,
     ServicePackagesComponent,
-    PackageDetailComponent
+    PackageDetailComponent,
+    DeleteModalComponent
   ]
 })
 
