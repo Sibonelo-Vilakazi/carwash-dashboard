@@ -1,1 +1,90 @@
-<p>booking-detail works!</p>
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-danger opacity-8"></span>
+    <!-- Header container -->
+    
+  </div>
+
+  <div class="container-fluid mt--7">
+    <div class="row">
+      
+      <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0">Booking</h3>
+              </div>
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="bookingForm">
+              <h6 class="heading-small text-muted mb-4">Booking information</h6>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Vehicle</label>
+                      <input type="text" id="input-username" formControlName="vehicle"  class="form-control form-control-alternative" placeholder="BMW">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-price">Color</label>
+                      <input type="text" formControlName="color" id="input-price" class="form-control form-control-alternative" placeholder="White">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Number Plate</label>
+                      <input type="text" id="input-username" formControlName="numberPlate"  class="form-control form-control-alternative" placeholder="KV 000 IK JP">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-{{columnNumber}}">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Select Package</label>
+                      <select [disabled]="isEdit" (change)="handleChange($event.target.value)"class="custom-select" id="inputGroupSelect02">
+                        <option *ngIf="!isEdit" disabled selected>Choose Package...</option>
+                        <option [selected]="carWashBooking.packageName === item.name"  *ngFor="let item of servicePackages; let packageIndex = index" [value]="packageIndex">{{item.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  
+                  <div  class="col-lg-{{columnNumber}}">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-price">Payment Method</label>
+                      <select [disabled]="isEdit"  (change)="selectPaymentType = $event.target.value" class="custom-select" id="inputGroupSelect02">
+                        <option *ngIf="!isEdit" disabled selected>Choose pament method...</option>
+                        <option [selected]="carWashBooking.paymentMethod.toString() === item"  *ngFor="let item of getPaymentMethods()" [value]="item">{{item}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div *ngIf="isEdit && carWashBooking" class="col-lg-{{columnNumber}}">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-price">Status</label>
+                      <select (change)="selectedStatus = $event.target.value" class="custom-select" id="inputGroupSelect02">
+                        
+                        <option [selected]="item === carWashBooking.status" *ngFor="let item of getStatus()" [value]="item">{{item}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+               
+              </div>
+              <hr class="my-4" />
+              
+              <div class="col-4 text-left">
+                <button [disabled]="bookingForm.invalid || !selectPaymentMethod || !selectedPackage" (click)="isEdit ? handleUpdate() : handleCreate()" href="#!" class="btn w-100 py-3 btn-sm btn-primary">
+                  {{isEdit ? 'Update Booking' : 'Create Booking'}}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

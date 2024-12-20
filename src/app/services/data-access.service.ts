@@ -12,6 +12,9 @@ export class DataAccessService {
   genericService =  inject(GenericHttpService)
   constructor(private httpClient: HttpClient ) { }
 
+  getServicePackages() {
+    return this.httpClient.get<ServicePackages[]>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGES));
+  }
   getServicePackageById(service_id: string) { 
     return this.httpClient.get<ServicePackages>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGES_BY_ID(service_id))); 
   }
@@ -19,6 +22,11 @@ export class DataAccessService {
   getAllBookings() { 
     return this.httpClient.get<CarWashBooking[]>(this.genericService.builderUrl(Endpoints.GET_ALL_BOOKINGS)); 
   }
+
+  getBookingByBookingId(bookingId: string) { 
+    return this.httpClient.get<CarWashBooking>(this.genericService.builderUrl(Endpoints.GET_BOOKING_BY_ID(bookingId))); 
+  }
+
 
 
   updateServicePackage ( data: ServicePackages ){
@@ -38,4 +46,12 @@ export class DataAccessService {
   updateBookingStatus(data: {bookingId: string, status: string}) {
     return this.httpClient.put<CarWashBooking>(this.genericService.builderUrl(Endpoints.UPDATE_BOOKING_STATUS), data)
   } 
+
+  updateBooking(data: CarWashBooking) {
+    return this.httpClient.put<CarWashBooking>(this.genericService.builderUrl(Endpoints.UPDATE_BOOKING), data)
+  } 
+
+  bookCarwash(data: CarWashBooking) {
+    return this.httpClient.post<CarWashBooking>(this.genericService.builderUrl(Endpoints.Booking_CAR_WASH), data)
+  }
 }

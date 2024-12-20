@@ -16,4 +16,5 @@ export interface CarWashBooking {
     serviceId: string;
     userId: string;
     numberPlate: string;
+    isAdminBooking?: boolean
 }

@@ -16,6 +16,7 @@ import { ServicePackagesComponent } from 'src/app/pages/service-packages/service
 import { PackageDetailComponent } from 'src/app/pages/package-detail/package-detail.component';
 import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/delete-modal.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { BookingDetailComponent } from 'src/app/pages/booking-detail/booking-detail.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     MapsComponent,
     ServicePackagesComponent,
     PackageDetailComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    BookingDetailComponent
   ],
   providers: [ToastrService]
 })

@@ -21,7 +21,7 @@ export class ServicePackagesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.genericHttpService.httpGet(Endpoints.GET_SERVICE_PACKAGES).subscribe({
+    this.dataAccessService.getServicePackages().subscribe({
       next: (res: ServicePackages[]) => {
         this.servicePackages = res;
         console.log(this.servicePackages); 

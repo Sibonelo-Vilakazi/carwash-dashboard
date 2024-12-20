@@ -13,10 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { ServicePackagesComponent } from './pages/service-packages/service-packages.component';
-import { PackageDetailComponent } from './pages/package-detail/package-detail.component';
-import { BookingsComponent } from './pages/bookings/bookings.component';
-import { BookingDetailComponent } from './pages/booking-detail/booking-detail.component';
 
+import { BookingsComponent } from './pages/bookings/bookings.component';
 
 @NgModule({
   imports: [
@@ -33,7 +31,6 @@ import { BookingDetailComponent } from './pages/booking-detail/booking-detail.co
     AdminLayoutComponent,
     AuthLayoutComponent,
     BookingsComponent,
-    BookingDetailComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
