@@ -35,7 +35,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let cardItem of bookings">
+                  <tr *ngFor="let cardItem of bookings; let i = index">
                     <th scope="row">
                       <div class="media align-items-center">
                 
@@ -53,9 +53,23 @@
                     <td>{{cardItem.color}}</td>
                     <td>{{cardItem.numberPlate}}</td>
                     <td> 
-                      <span class="badge badge-dot mr-4">
-                        <i [class]="getStatusIcon(cardItem.status)"></i> {{cardItem.status}}
-                      </span>
+                      
+
+                      <div ngbDropdown placement="bottom-right">
+                        
+                        <span class="badge badge-dot mr-4" ngbDropdownToggle>
+                          <i [class]="getStatusIcon(cardItem.status)"></i> {{cardItem.status}}
+                        </span>
+                        <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                          
+                          <a *ngFor="let item of getStatus()" class="dropdown-item" (click)="handleChangeStatus(cardItem.bookingId, item, i)" >
+                            <!-- <i [class]="getStatusIcon(item)"></i> {{item}} -->
+                            <span class="badge badge-dot mr-4">
+                              <i [class]="getStatusIcon(item)"></i> {{item}}
+                            </span>
+                          </a>
+                        </div> 
+                      </div>
                     </td>
                     <td>
                       {{cardItem?.date ?? 'Today'}}

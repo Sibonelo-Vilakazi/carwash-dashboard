@@ -33,4 +33,9 @@ export class DataAccessService {
   deleteServicePackage (service_id: string) {
     return this.httpClient.delete<ServicePackages>(this.genericService.builderUrl(Endpoints.Deactivate_SERVICE_PACKAGES(service_id)))
   } 
+
+
+  updateBookingStatus(data: {bookingId: string, status: string}) {
+    return this.httpClient.put<CarWashBooking>(this.genericService.builderUrl(Endpoints.UPDATE_BOOKING_STATUS), data)
+  } 
 }

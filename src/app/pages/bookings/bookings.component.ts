@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { BookingStatus } from 'src/app/enums/BookingStatus.enum';
 import { CarWashBooking } from 'src/app/interfaces/models/carwash-booking.interface';
 import { DataAccessService } from 'src/app/services/data-access.service';
@@ -12,7 +13,11 @@ import { DataAccessService } from 'src/app/services/data-access.service';
 export class BookingsComponent implements OnInit {
 
   bookings: CarWashBooking[] = [];
-  constructor(private dataAccessService: DataAccessService, private router: Router) { }
+  constructor(private dataAccessService: DataAccessService, private router: Router,
+    private toastrService: ToastrService
+  ) { }
+
+
 
   ngOnInit(): void {
     this.dataAccessService.getAllBookings().subscribe({
@@ -51,6 +56,26 @@ export class BookingsComponent implements OnInit {
 
     return 'bg-danger'
 
+  }
+
+  getStatus (): string[]{
+    return Object.values(BookingStatus).map((status) => {
+      return status
+    })  
+  }
+
+  handleChangeStatus(bookingId: string, status: string, index: number){
+    const data = { bookingId, status};
+
+    this.dataAccessService.updateBookingStatus(data).subscribe({
+      next: (res: CarWashBooking) => {
+          this.bookings[index] = res; 
+          this.toastrService.success('Successfully updated the booking status')
+      },
+      error: (error: any) =>{
+        this.toastrService.error('Something went wrong when trying to update the booking status');
+      }
+    })
   }
 
 }

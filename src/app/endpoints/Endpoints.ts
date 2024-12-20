@@ -8,4 +8,6 @@ export class Endpoints{
     static Deactivate_SERVICE_PACKAGES = (service_id: string) => `business/service-packages/deactivateServicePackageById/${service_id}`;
 
     static GET_ALL_BOOKINGS = `bookings/getAllBookings`;
+
+    static UPDATE_BOOKING_STATUS = 'bookings/updateBookingStatus';
 }
