@@ -20,7 +20,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'service-package/edit/:service_id',     component: PackageDetailComponent },
     { path: 'service-package/create',     component: PackageDetailComponent },
     { path: 'bookings',     component: BookingsComponent },
-    { path: 'bookings/edit/:bookingId',     component: BookingDetailComponent },
-    { path: 'bookings/create',     component: BookingDetailComponent },
+    { path: 'booking/edit/:bookingId',     component: BookingDetailComponent },
+    { path: 'booking/create',     component: BookingDetailComponent },
 
 ];

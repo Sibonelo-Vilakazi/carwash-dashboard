@@ -17,7 +17,7 @@ export class DataAccessService {
   }
 
   getAllBookings() { 
-    return this.httpClient.get<CarWashBooking>(this.genericService.builderUrl(Endpoints.GET_ALL_BOOKINGS)); 
+    return this.httpClient.get<CarWashBooking[]>(this.genericService.builderUrl(Endpoints.GET_ALL_BOOKINGS)); 
   }
 
 
