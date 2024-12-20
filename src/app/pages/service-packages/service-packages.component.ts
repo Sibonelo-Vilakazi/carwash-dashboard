@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/delete-modal.component';
 import { Endpoints } from 'src/app/endpoints/Endpoints';
 import { GenericHttpService } from 'src/app/services/generic-http.service';
 
@@ -11,7 +13,9 @@ import { GenericHttpService } from 'src/app/services/generic-http.service';
 export class ServicePackagesComponent implements OnInit {
 
   servicePackages: ServicePackages[] = [];
-  constructor(private genericHttpService: GenericHttpService, private router: Router) { }
+  constructor(private genericHttpService: GenericHttpService, private router: Router,
+    private modalService: NgbModal
+  ) { }
 
   ngOnInit(): void {
     this.genericHttpService.httpGet(Endpoints.GET_SERVICE_PACKAGES).subscribe({
@@ -26,12 +30,22 @@ export class ServicePackagesComponent implements OnInit {
   }
 
   handleEdit(service_id: string ){
-    console.log('service_id: ', service_id)
-    this.router.navigateByUrl(`service-package/${service_id}`);
+    this.router.navigateByUrl(`service-package/edit/${service_id}`);
   }
 
-  handleDelet(service_id: string) {
+  handleDelete(service_id: string) {
+    this.modalService.open(DeleteModalComponent, {
+      windowClass: 'delete-modal',
+      size: 'lg',
+      backdrop: 'static',
+      centered: true
+    });
 
+  }
+
+
+  handleCreatePackage() {
+    this.router.navigateByUrl('service-package/create');
   }
 
 }

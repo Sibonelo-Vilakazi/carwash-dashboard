@@ -1,7 +1,16 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
-    
+  <div class="row">
+  <div class="col-lg-12 text-right pr-5">
+    <button (click)="handleCreatePackage()" href="#!" class="btn p-3 btn-sm btn-primary">
+      <i class="fas fa-plus-circle mr-2"></i>
+      Add Package</button>
+
   </div>
-  <!-- Page content -->
+
+</div>
+</div>
+  
+    
   <div class="container-fluid mt--7">
     <!-- Table -->
     <div class="row">
@@ -43,6 +52,7 @@
                   <td class="text-right">
                     <div ngbDropdown placement="bottom-right">
                       <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                        <i class="fas fa-ellipsis-v"></i>
                       </a>
                       <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                         <a class="dropdown-item" (click)="handleEdit(cardItem.service_id)">Edit</a>
@@ -85,3 +95,6 @@
     
   </div>
   
+  <ng-template #content let-modal>
+    
+  </ng-template>
