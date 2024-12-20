@@ -7,6 +7,8 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { ServicePackagesComponent } from 'src/app/pages/service-packages/service-packages.component';
 import { PackageDetailComponent } from 'src/app/pages/package-detail/package-detail.component';
+import { BookingsComponent } from 'src/app/pages/bookings/bookings.component';
+import { BookingDetailComponent } from 'src/app/pages/booking-detail/booking-detail.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -16,5 +18,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent },
     { path: 'service-packages',     component: ServicePackagesComponent },
     { path: 'service-package/edit/:service_id',     component: PackageDetailComponent },
-    { path: 'service-package/create',     component: PackageDetailComponent }
+    { path: 'service-package/create',     component: PackageDetailComponent },
+    { path: 'bookings',     component: BookingsComponent },
+    { path: 'bookings/edit/:bookingId',     component: BookingDetailComponent },
+    { path: 'bookings/create',     component: BookingDetailComponent },
+
 ];

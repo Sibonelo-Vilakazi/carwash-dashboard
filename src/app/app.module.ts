@@ -14,6 +14,8 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { ServicePackagesComponent } from './pages/service-packages/service-packages.component';
 import { PackageDetailComponent } from './pages/package-detail/package-detail.component';
+import { BookingsComponent } from './pages/bookings/bookings.component';
+import { BookingDetailComponent } from './pages/booking-detail/booking-detail.component';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { PackageDetailComponent } from './pages/package-detail/package-detail.co
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
+    BookingsComponent,
+    BookingDetailComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

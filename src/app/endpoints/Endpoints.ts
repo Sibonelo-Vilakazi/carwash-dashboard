@@ -5,5 +5,7 @@ export class Endpoints{
     static UPDATE_SERVICE_PACKAGES   = `business/service-packages/updateServicePackage`;
     static CREATE_SERVICE_PACKAGES   = `business/service-packages/createServicePackage`;
 
-    
+    static Deactivate_SERVICE_PACKAGES = (service_id: string) => `business/service-packages/deactivateServicePackageById/${service_id}`;
+
+    static GET_ALL_BOOKINGS = `bookings/getAllBookings`;
 }

@@ -18,6 +18,10 @@ export class DeleteModalComponent implements OnInit {
    
   }
 
+  handleConfirmation() {
+    this.modal.dismissAll('confirm');
+  }
+
   closeModal() {
     this.modal.dismissAll('closed');
   }

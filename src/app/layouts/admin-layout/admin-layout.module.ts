@@ -15,7 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServicePackagesComponent } from 'src/app/pages/service-packages/service-packages.component';
 import { PackageDetailComponent } from 'src/app/pages/package-detail/package-detail.component';
 import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/delete-modal.component';
-// import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @NgModule({
   imports: [
@@ -25,7 +25,8 @@ import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/del
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    ClipboardModule
+    ClipboardModule,
+    ToastrModule.forRoot({positionClass: 'inline'})
   ],
   declarations: [
     DashboardComponent,
@@ -36,7 +37,8 @@ import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/del
     ServicePackagesComponent,
     PackageDetailComponent,
     DeleteModalComponent
-  ]
+  ],
+  providers: [ToastrService]
 })
 
 export class AdminLayoutModule {}

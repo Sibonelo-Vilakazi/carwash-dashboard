@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/delete-modal.component';
 import { Endpoints } from 'src/app/endpoints/Endpoints';
+import { DataAccessService } from 'src/app/services/data-access.service';
 import { GenericHttpService } from 'src/app/services/generic-http.service';
 
 @Component({
@@ -14,7 +16,8 @@ export class ServicePackagesComponent implements OnInit {
 
   servicePackages: ServicePackages[] = [];
   constructor(private genericHttpService: GenericHttpService, private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal, private dataAccessService: DataAccessService, 
+    private toasterService: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -34,12 +37,29 @@ export class ServicePackagesComponent implements OnInit {
   }
 
   handleDelete(service_id: string) {
-    this.modalService.open(DeleteModalComponent, {
+    const modalRef = this.modalService.open(DeleteModalComponent, {
       windowClass: 'delete-modal',
       size: 'lg',
       backdrop: 'static',
+      backdropClass: 'delete-modal-backdrop',
       centered: true
     });
+    modalRef.dismissed.subscribe((result) => {
+      console.log('RESULT: ',result); 
+
+      if(result === 'confirm') {
+        this.dataAccessService.deleteServicePackage(service_id).subscribe({
+          next: () => {
+            this.toasterService.success('Successfully deactivated this package');
+            this.ngOnInit();
+          },
+          error: () =>{
+            this.toasterService.success('Something went wrong when trying to deactivate this package');
+          }
+        }) 
+      }
+    })
+   
 
   }
 
