@@ -23,8 +23,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "allowedCommonJsDependencies": [
-              "chart.js"
+              "chart.js",
+              "crypto"
             ],
+            
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -140,7 +142,8 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "argon-dashboard-angular:serve"
+            "devServerTarget": "argon-dashboard-angular:serve",
+            
           },
           "configurations": {
             "production": {

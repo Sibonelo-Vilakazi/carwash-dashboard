@@ -28,6 +28,7 @@ export class BookingDetailComponent implements OnInit {
     color: ['',Validators.required],
     numberPlate: ['', Validators.required]
   });
+  allPaymentMethods: string[] = [];
   bookingId: string;
   packageObservable: Subject<boolean> =new Subject();
   constructor(private dataAccessService: DataAccessService, private fb: FormBuilder,
@@ -45,9 +46,14 @@ export class BookingDetailComponent implements OnInit {
       this.isEdit = param.bookingId !== undefined && param.bookingId;
       this.bookingId = param.bookingId;
       
+      console.log('CARS: ', this.allPaymentMethods)
       if(this.isEdit){
         this.getBooking()
         this.columnNumber = 4;
+        this.allPaymentMethods = this.getPaymentMethods(false);
+        console.log('COURSE: ', this.allPaymentMethods);
+      }else {
+        this.allPaymentMethods = this.getPaymentMethods(true);
       }
     })
     this.dataAccessService.getServicePackages().subscribe({
@@ -119,7 +125,8 @@ export class BookingDetailComponent implements OnInit {
       serviceId: this.selectedPackage.service_id,
       userId: this.carWashBooking.userId,
       numberPlate: '',
-      isAdminBooking: true
+      isAdminBooking: true,
+      payment_status: "COMPLETE"
     }, this.bookingForm.value);
     this.carWashBooking.bookingId = this.bookingId;
     this.dataAccessService.updateBooking(this.carWashBooking).subscribe({
@@ -157,9 +164,11 @@ export class BookingDetailComponent implements OnInit {
       serviceId: this.selectedPackage.service_id,
       userId: 'Unkown',
       numberPlate: '',
-      isAdminBooking: true
+      isAdminBooking: true,
+      payment_status: "COMPLETE"
     }, this.bookingForm.value);
 
+    console.log('carwas: ', this.carWashBooking);
 
     this.dataAccessService.bookCarwash(this.carWashBooking).subscribe({
       next: () => {
@@ -172,8 +181,13 @@ export class BookingDetailComponent implements OnInit {
     })
   }
 
-  getPaymentMethods() {
-    return Object.values(PaymentTypes).map((item) => item).filter((payment) => payment !== PaymentTypes.CARD);
+  getPaymentMethods(isFiltered: boolean) {
+
+    if(isFiltered){
+      return Object.values(PaymentTypes).map((item) => item).filter((payment) => isFiltered && payment !== PaymentTypes.CARD)
+    }
+    return Object.values(PaymentTypes).map((item) => item);
+
   }
 
 }

@@ -41,24 +41,25 @@
                       <input type="text" id="input-username" formControlName="numberPlate"  class="form-control form-control-alternative" placeholder="KV 000 IK JP">
                     </div>
                   </div>
-
-                  <div class="col-lg-{{columnNumber}}">
+                  
+                  <div *ngIf="servicePackages && servicePackages.length > 0" class="col-lg-{{columnNumber}}">
                     <div class="form-group">
                       <label class="form-control-label" for="input-username">Select Package</label>
+                      
                       <select [disabled]="isEdit" (change)="handleChange($event.target.value)"class="custom-select" id="inputGroupSelect02">
                         <option *ngIf="!isEdit" disabled selected>Choose Package...</option>
-                        <option [selected]="carWashBooking.packageName === item.name"  *ngFor="let item of servicePackages; let packageIndex = index" [value]="packageIndex">{{item.name}}</option>
+                        <option [selected]="(carWashBooking?.packageName ?? '') === item.name"  *ngFor="let item of servicePackages; let packageIndex = index" [value]="packageIndex">{{item.name}}</option>
                       </select>
                     </div>
                   </div>
 
                   
-                  <div  class="col-lg-{{columnNumber}}">
+                  <div *ngIf="allPaymentMethods && allPaymentMethods.length > 0"  class="col-lg-{{columnNumber}}">
                     <div class="form-group">
                       <label class="form-control-label" for="input-price">Payment Method</label>
                       <select [disabled]="isEdit"  (change)="selectPaymentType = $event.target.value" class="custom-select" id="inputGroupSelect02">
                         <option *ngIf="!isEdit" disabled selected>Choose pament method...</option>
-                        <option [selected]="carWashBooking.paymentMethod.toString() === item"  *ngFor="let item of getPaymentMethods()" [value]="item">{{item}}</option>
+                        <option [selected]="carWashBooking && carWashBooking?.paymentMethod &&  (carWashBooking?.paymentMethod ?? '').toString() === item"  *ngFor="let item of allPaymentMethods" [value]="item">{{item}}</option>
                       </select>
                     </div>
                   </div>

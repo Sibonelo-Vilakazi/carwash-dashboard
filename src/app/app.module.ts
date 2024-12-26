@@ -15,6 +15,13 @@ import { ComponentsModule } from './components/components.module';
 import { ServicePackagesComponent } from './pages/service-packages/service-packages.component';
 
 import { BookingsComponent } from './pages/bookings/bookings.component';
+import {AngularFireModule} from "@angular/fire/compat";
+import {AngularFireAuthModule} from "@angular/fire/compat/auth";
+import {AppCheckModule} from '@angular/fire/app-check';
+// import {} from '@angular/fire/compat/ap'
+
+import { BrowserModule } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   imports: [
@@ -23,8 +30,12 @@ import { BookingsComponent } from './pages/bookings/bookings.component';
     HttpClientModule,
     ComponentsModule,
     NgbModule,
+    BrowserModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AppCheckModule
   ],
   declarations: [
     AppComponent,

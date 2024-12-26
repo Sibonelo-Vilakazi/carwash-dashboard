@@ -1,6 +1,30 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
     <div class="row">
-    <div class="col-lg-12 text-right pr-5">
+      <div *ngIf="progressStats" class="row col-lg-12 mb-2 pr-5 pl-5">
+        <div *ngFor="let item of progressStatusCardConfig" class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">{{item.name}}</h5>
+                  <span class="h2 font-weight-bold mb-0">{{item.stats}}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape {{item.color}} text-white rounded-circle shadow">
+                    <i class="{{item.icon}}"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                <span class="text-nowrap">Since last month</span>
+              </p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="col-lg-12 text-right  pr-5">
+      
       <button (click)="handleCreateBooking()" href="#!" class="btn p-3 btn-sm btn-primary">
         <i class="fas fa-plus-circle mr-2"></i>
         Add Booking</button>

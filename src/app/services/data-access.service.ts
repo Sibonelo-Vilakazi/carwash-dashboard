@@ -3,6 +3,8 @@ import { Inject, Injectable, inject } from '@angular/core';
 import { Endpoints } from '../endpoints/Endpoints';
 import { GenericHttpService } from './generic-http.service';
 import { CarWashBooking } from '../interfaces/models/carwash-booking.interface';
+import { ProgressStats } from '../interfaces/models/progress-stats.interface';
+import { AdminUser } from '../interfaces/models/admin-user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +55,13 @@ export class DataAccessService {
 
   bookCarwash(data: CarWashBooking) {
     return this.httpClient.post<CarWashBooking>(this.genericService.builderUrl(Endpoints.Booking_CAR_WASH), data)
+  }
+
+  getProgressStatsCount(){
+    return this.httpClient.get<ProgressStats>(this.genericService.builderUrl(Endpoints.GET_PROGRES_STATS_Count));
+  }
+
+  getUser(userId: string) {
+    return this.httpClient.get<AdminUser>(this.genericService.builderUrl(Endpoints.GET_USER_BY_ID(userId)));
   }
 }
