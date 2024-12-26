@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
   toastrService = inject(ToastrService);
   revenueCards: ProgressStatsCardConfig[] = [];
   servicePackageRevenueData!: ServicePackageRevenueData;
+  chartLabel = 'Revenue';
   constructor(private dataAccessService: DataAccessService){}
 
   ngOnInit() {
@@ -110,6 +111,8 @@ export class DashboardComponent implements OnInit {
 
 
   public updateOptions(option: number) {
+    this.data = this.datasets[option];
+    this.chartLabel = option === 0 ? 'Revenue' : "Order"
     this.salesChart.data.datasets[0].data = this.data;
     
       this.salesChart.options.scales.yAxes[0].ticks.callback = (value) => {
