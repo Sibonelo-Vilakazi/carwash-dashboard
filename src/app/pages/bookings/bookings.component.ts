@@ -47,10 +47,10 @@ export class BookingsComponent implements OnInit {
               break;
           }
           this.progressStatusCardConfig.push({
-            name: BookingStatus[item],
+            name: item,
             stats: this.progressStats[item],
             icon: icon,
-            color: this.getStatusIcon(BookingStatus[item])
+            color: this.getStatusIcon(item)
           })
         });
 
