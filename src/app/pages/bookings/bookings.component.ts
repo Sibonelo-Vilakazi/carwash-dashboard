@@ -33,13 +33,13 @@ export class BookingsComponent implements OnInit {
         Object.keys(this.progressStats).map((item) => {
           let icon = "";
           switch (item ) {
-            case 'IN_QUEUE':
+            case BookingStatus.IN_QUEUE:
               icon = 'fas fa-hourglass-half';
               break;
-            case "WASHING":
+            case BookingStatus.WASHING:
               icon = 'fas fa-solid fa-water';
               break;
-            case "FINISHING":
+            case BookingStatus.FINISHING:
               icon = 'fas fa-flag-checkered';
               break;
             default:
@@ -52,7 +52,9 @@ export class BookingsComponent implements OnInit {
             icon: icon,
             color: this.getStatusIcon(BookingStatus[item])
           })
-        })
+        });
+
+        console.log(this.progressStatusCardConfig)
       },
       error: (error: any) => {
         console.error(error);

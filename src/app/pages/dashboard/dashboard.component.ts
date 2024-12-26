@@ -8,6 +8,8 @@ import {
   chartExample1,
   chartExample2
 } from "../../variables/charts";
+import { DataAccessService } from 'src/app/services/data-access.service';
+import { YearlyRevenueData } from 'src/app/interfaces/models/yearly-revenue.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +24,8 @@ export class DashboardComponent implements OnInit {
   public clicked: boolean = true;
   public clicked1: boolean = false;
 
+  constructor(private dataAccessService: DataAccessService){}
+
   ngOnInit() {
 
     this.datasets = [
@@ -35,7 +39,7 @@ export class DashboardComponent implements OnInit {
 
     parseOptions(Chart, chartOptions());
 
-
+    
     var ordersChart = new Chart(chartOrders, {
       type: 'bar',
       options: chartExample2.options,
@@ -44,16 +48,47 @@ export class DashboardComponent implements OnInit {
 
     var chartSales = document.getElementById('chart-sales');
 
-    this.salesChart = new Chart(chartSales, {
-			type: 'line',
-			options: chartExample1.options,
-			data: chartExample1.data
-		});
+    this.dataAccessService.getYearlyRevenue().subscribe({
+      next: (res: YearlyRevenueData) => {
+        const salesAmounts =  [];
+        this.datasets[1] = []
+        Object.keys(res).map((key) =>{
+          salesAmounts.push(res[key].amount)
+          this.datasets[1].push(res[key].orders);
+          
+        } )
+        this.datasets[0] = salesAmounts;
+        console.log(salesAmounts);
+        this.data = salesAmounts;
+        chartExample1.data.datasets[0].data = salesAmounts
+        this.salesChart = new Chart(chartSales, {
+          type: 'line',
+          options: chartExample1.options,
+          data: chartExample1.data
+        });
+      }
+    })
+    
   }
 
 
-  public updateOptions() {
+  public updateOptions(option: number) {
     this.salesChart.data.datasets[0].data = this.data;
+    
+      this.salesChart.options.scales.yAxes[0].ticks.callback = (value) => {
+        console.log('value: ', value)
+        if( option === 1){
+          if(!(value % 1)){
+            return value;
+
+          }
+
+        } else {
+          return 'R' + value
+        }
+      
+      }
+    
     this.salesChart.update();
   }
 

@@ -5,6 +5,7 @@ import { GenericHttpService } from './generic-http.service';
 import { CarWashBooking } from '../interfaces/models/carwash-booking.interface';
 import { ProgressStats } from '../interfaces/models/progress-stats.interface';
 import { AdminUser } from '../interfaces/models/admin-user.interface';
+import { YearlyRevenueData } from '../interfaces/models/yearly-revenue.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,10 @@ export class DataAccessService {
 
   getProgressStatsCount(){
     return this.httpClient.get<ProgressStats>(this.genericService.builderUrl(Endpoints.GET_PROGRES_STATS_Count));
+  }
+
+  getYearlyRevenue(){
+    return this.httpClient.get<YearlyRevenueData>(this.genericService.builderUrl(Endpoints.GET_YEARLY_REVENUE));
   }
 
   getUser(userId: string) {
