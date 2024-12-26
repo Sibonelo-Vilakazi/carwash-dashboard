@@ -7,17 +7,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginComponent } from '../../pages/login/login.component';
 import { RegisterComponent } from '../../pages/register/register.component';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AuthLayoutRoutes),
     FormsModule,
     // NgbModule
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot({positionClass: 'inline'})
   ],
   declarations: [
     LoginComponent,
     RegisterComponent
-  ]
+  ],
+  providers: [ToastrService]
 })
 export class AuthLayoutModule { }

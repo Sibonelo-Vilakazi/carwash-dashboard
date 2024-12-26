@@ -22,6 +22,7 @@ import {AppCheckModule} from '@angular/fire/app-check';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AppCheckModule
+    AppCheckModule,
+    ToastrModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -43,7 +45,7 @@ import { environment } from 'src/environments/environment';
     AuthLayoutComponent,
     BookingsComponent,
   ],
-  providers: [],
+  providers: [ToastrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

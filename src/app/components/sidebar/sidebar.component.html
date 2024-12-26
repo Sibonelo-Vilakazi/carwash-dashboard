@@ -95,6 +95,12 @@
                   {{menuItem.title}}
               </a>
           </li>
+          <li class="nav-item">
+            <a routerLinkActive="active" (click)="authService.loggingOut()" class="nav-link">
+              <i class="ni fas fa-door"></i>
+              Logout
+          </a>
+        </li>
       </ul>
       <!-- Divider -->
       <hr class="my-3">
