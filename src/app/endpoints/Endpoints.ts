@@ -16,7 +16,7 @@ export class Endpoints{
 
     static GET_PROGRES_STATS_Count = 'dashboard/getProcessStatusCount';
     static GET_YEARLY_REVENUE = 'dashboard/getYearlyRevenue';
-
+    static GET_SERVICE_PACKAGE_REVENUE = 'dashboard/getServicePackageRevenue'
     static GET_USER_BY_ID = (userId: string) => `user/getUser/${userId}`;
     
 }

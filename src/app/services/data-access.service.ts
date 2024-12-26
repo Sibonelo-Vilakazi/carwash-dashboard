@@ -6,6 +6,7 @@ import { CarWashBooking } from '../interfaces/models/carwash-booking.interface';
 import { ProgressStats } from '../interfaces/models/progress-stats.interface';
 import { AdminUser } from '../interfaces/models/admin-user.interface';
 import { YearlyRevenueData } from '../interfaces/models/yearly-revenue.interface';
+import { ServicePackageRevenueData } from '../interfaces/models/service-package-revenue-data.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -68,5 +69,9 @@ export class DataAccessService {
 
   getUser(userId: string) {
     return this.httpClient.get<AdminUser>(this.genericService.builderUrl(Endpoints.GET_USER_BY_ID(userId)));
+  }
+
+  getServicePackageRevenue(){
+    return this.httpClient.get<ServicePackageRevenueData>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGE_REVENUE));
   }
 }

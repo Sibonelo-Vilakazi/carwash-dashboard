@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import Chart from 'chart.js';
 
 // core components
@@ -10,6 +10,10 @@ import {
 } from "../../variables/charts";
 import { DataAccessService } from 'src/app/services/data-access.service';
 import { YearlyRevenueData } from 'src/app/interfaces/models/yearly-revenue.interface';
+import { ServicePackageRevenueData } from 'src/app/interfaces/models/service-package-revenue-data.interface';
+import { error } from 'console';
+import { ToastrService } from 'ngx-toastr';
+import { ProgressStatsCardConfig } from 'src/app/interfaces/ui-config/progress-stats-card-config.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +27,9 @@ export class DashboardComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
-
+  toastrService = inject(ToastrService);
+  revenueCards: ProgressStatsCardConfig[] = [];
+  servicePackageRevenueData!: ServicePackageRevenueData;
   constructor(private dataAccessService: DataAccessService){}
 
   ngOnInit() {
@@ -34,7 +40,7 @@ export class DashboardComponent implements OnInit {
     ];
     this.data = this.datasets[0];
 
-
+    this.getServicePackageRevenue();
     var chartOrders = document.getElementById('chart-orders');
 
     parseOptions(Chart, chartOptions());
@@ -69,6 +75,37 @@ export class DashboardComponent implements OnInit {
       }
     })
     
+  }
+
+  getServicePackageRevenue() {
+    this.revenueCards = [];
+    this.dataAccessService.getServicePackageRevenue().subscribe({
+      next: (res: ServicePackageRevenueData) =>{
+        this.servicePackageRevenueData = res;
+        this.revenueCards.push({
+          color: 'bg-primary',
+          icon: 'ni ni-money-coins',
+          name: 'Total Revenue',
+          stats: Object.keys(res).map((key) => res[key].amount).reduce((sum, amount ) => sum + amount)
+        })
+
+        Object.keys(res).map((key) => {
+          this.revenueCards.push({
+            color: 'bg-primary',
+            icon: 'ni ni-money-coins',
+            name: res[key].packageName,
+            stats: res[key].amount
+          });
+        })
+      },
+      error: (error: any) =>{
+        this.toastrService.error(error.error.message)
+      }
+    })
+  }
+
+  getServiceKeys() {
+    return Object.keys(this.servicePackageRevenueData);
   }
 
 
