@@ -24,7 +24,6 @@ export class ServicePackagesComponent implements OnInit {
     this.dataAccessService.getServicePackages().subscribe({
       next: (res: ServicePackages[]) => {
         this.servicePackages = res;
-        console.log(this.servicePackages); 
       },
       error: (err: any) =>{
         console.error(err);
@@ -45,7 +44,6 @@ export class ServicePackagesComponent implements OnInit {
       centered: true
     });
     modalRef.dismissed.subscribe((result) => {
-      console.log('RESULT: ',result); 
 
       if(result === 'confirm') {
         this.dataAccessService.deleteServicePackage(service_id).subscribe({

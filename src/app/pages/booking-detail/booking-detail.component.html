@@ -73,6 +73,16 @@
                       </select>
                     </div>
                   </div>
+
+                  <div *ngIf="isEdit && carWashBooking && selectedPaymentStatus" class="col-lg-{{columnNumber}}">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-price">Payment Status</label>
+                      <select (change)="selectedPaymentStatus = $event.target.value" class="custom-select" id="inputGroupSelect02">
+                        
+                        <option [selected]="item === selectedPaymentStatus" *ngFor="let item of getPaymentStatus()" [value]="item">{{item}}</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
                
               </div>

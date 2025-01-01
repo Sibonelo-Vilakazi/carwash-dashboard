@@ -19,8 +19,7 @@ export class AuthGuard implements CanActivate {
     return this.authService.$currentUser.pipe(
       switchMap(user => {
         if (user) {
-          console.log('User is logged in, allow access');
-  
+         
           return from(user.getIdTokenResult()).pipe(
             map(tokenResult => {
               const claims = tokenResult.claims;
@@ -46,7 +45,6 @@ export class AuthGuard implements CanActivate {
             })
           );
         } else {
-          console.log('User is not logged in');
           this.authService.loggingOut();
           this.toaserService.error('Authentication error occurred.', 'Error');
           return of(false);

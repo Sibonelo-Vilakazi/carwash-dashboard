@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subject } from 'rxjs';
 import { BookingStatus } from 'src/app/enums/BookingStatus.enum';
+import { PaymentStatus } from 'src/app/enums/PaymentStatus.enum';
 import { PaymentTypes } from 'src/app/enums/payment-type.enum';
 import { generateOrderId } from 'src/app/helpers/helpers';
 import { CarWashBooking } from 'src/app/interfaces/models/carwash-booking.interface';
@@ -22,7 +23,9 @@ export class BookingDetailComponent implements OnInit {
   selectedPackage!: ServicePackages;
   selectPaymentType: string;
   columnNumber: number = 6;
-  selectedStatus: string = ''
+  selectedStatus: string = '';
+  selectedPaymentStatus: string = '';
+
   bookingForm: FormGroup = this.fb.group({
     vehicle: ['', Validators.required],
     color: ['',Validators.required],
@@ -45,13 +48,12 @@ export class BookingDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe((param) =>{
       this.isEdit = param.bookingId !== undefined && param.bookingId;
       this.bookingId = param.bookingId;
-      
-      console.log('CARS: ', this.allPaymentMethods)
       if(this.isEdit){
         this.getBooking()
         this.columnNumber = 4;
+        
         this.allPaymentMethods = this.getPaymentMethods(false);
-        console.log('COURSE: ', this.allPaymentMethods);
+      
       }else {
         this.allPaymentMethods = this.getPaymentMethods(true);
       }
@@ -59,7 +61,7 @@ export class BookingDetailComponent implements OnInit {
     this.dataAccessService.getServicePackages().subscribe({
       next: (res: ServicePackages[]) => {
         this.servicePackages = res;
-        console.log(this.servicePackages);
+       
         this.packageObservable.next(true)
       },
       error: (err: any) =>{
@@ -94,6 +96,15 @@ export class BookingDetailComponent implements OnInit {
       next: (res: CarWashBooking) => {
         this.carWashBooking = res; 
         this.selectedStatus = res.status.toString();
+
+        if(!res.payment_status){
+          this.selectedPaymentStatus = PaymentStatus.INCOMPLETE;  
+        }
+      
+        if(this.isEdit && this.carWashBooking.paymentMethod === PaymentTypes.CASH){
+          this.columnNumber = 3;
+          
+        }
         this.bookingForm = this.fb.group({
           vehicle: [this.carWashBooking.vehicle, Validators.required],
           color: [this.carWashBooking.color,Validators.required],
@@ -107,6 +118,10 @@ export class BookingDetailComponent implements OnInit {
         this.toastrService.error(error.error.mesage)
       }
     })
+  }
+
+  getPaymentStatus () {
+    return Object.values(PaymentStatus);
   }
 
   handleUpdate(){
@@ -126,7 +141,7 @@ export class BookingDetailComponent implements OnInit {
       userId: this.carWashBooking.userId,
       numberPlate: '',
       isAdminBooking: true,
-      payment_status: "COMPLETE"
+      payment_status: this.selectedPaymentStatus
     }, this.bookingForm.value);
     this.carWashBooking.bookingId = this.bookingId;
     this.dataAccessService.updateBooking(this.carWashBooking).subscribe({
@@ -168,7 +183,7 @@ export class BookingDetailComponent implements OnInit {
       payment_status: "COMPLETE"
     }, this.bookingForm.value);
 
-    console.log('carwas: ', this.carWashBooking);
+  
 
     this.dataAccessService.bookCarwash(this.carWashBooking).subscribe({
       next: () => {

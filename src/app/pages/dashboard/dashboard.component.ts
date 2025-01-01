@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
           
         } )
         this.datasets[0] = salesAmounts;
-        console.log(salesAmounts);
+   
         this.data = salesAmounts;
         chartExample1.data.datasets[0].data = salesAmounts
         this.salesChart = new Chart(chartSales, {
@@ -106,7 +106,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getServiceKeys() {
-    return Object.keys(this.servicePackageRevenueData);
+    return this.servicePackageRevenueData ? Object.keys(this.servicePackageRevenueData) : [];
   }
 
 
@@ -116,7 +116,7 @@ export class DashboardComponent implements OnInit {
     this.salesChart.data.datasets[0].data = this.data;
     
       this.salesChart.options.scales.yAxes[0].ticks.callback = (value) => {
-        console.log('value: ', value)
+      
         if( option === 1){
           if(!(value % 1)){
             return value;

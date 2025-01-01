@@ -15,7 +15,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     FormsModule,
     // NgbModule
     ReactiveFormsModule,
-    ToastrModule.forRoot({positionClass: 'inline'})
+    ToastrModule.forRoot()
   ],
   declarations: [
     LoginComponent,

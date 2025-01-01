@@ -30,8 +30,7 @@ export class PackageDetailComponent implements OnInit {
     
     this.activatedRoute.params.subscribe((params: any) => {
       this.serviceId= params.service_id;
-      console.log(this.serviceId)
-      console.log('Upda: ', this.serviceId)
+  
       this.initializeData();
       
       
@@ -56,8 +55,6 @@ export class PackageDetailComponent implements OnInit {
             }))
           });
 
-
-          console.log(this.packageItems.controls[0]) 
         },
         error: (error: any) =>{
           console.error(error); 

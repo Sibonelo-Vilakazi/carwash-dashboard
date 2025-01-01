@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
   
   handleSignIn() {
-    console.log(this.loginForm.value);
     this.authService.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
     .then(async (res) => {
       const tokenResult = await res.user.getIdTokenResult();
@@ -37,11 +36,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       const claims = tokenResult.claims; // later I will be using the claims
 
       this.authService.$currentUser.subscribe((result ) => {
-        console.log("user: ", result);
         if(result){
           this.dataAccessService.getUser(result.uid).subscribe( {
             next: (res: AdminUser) => {
-              console.log(res);
+             
               // if(res.role !== UserRoles.ADMIN){
               //   this.toastrService.error('Unauthorized user');
               //   return;

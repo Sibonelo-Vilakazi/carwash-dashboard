@@ -25,7 +25,7 @@ export class BookingsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log('Environments: ', environment)
+
     this.dataAccessService.getProgressStatsCount().subscribe({
       next: (res: ProgressStats) =>{
         this.progressStats = res;
@@ -54,7 +54,7 @@ export class BookingsComponent implements OnInit {
           })
         });
 
-        console.log(this.progressStatusCardConfig)
+        
       },
       error: (error: any) => {
         console.error(error);

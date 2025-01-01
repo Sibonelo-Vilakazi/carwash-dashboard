@@ -27,7 +27,7 @@ import { BookingDetailComponent } from 'src/app/pages/booking-detail/booking-det
     HttpClientModule,
     NgbModule,
     ClipboardModule,
-    ToastrModule.forRoot({positionClass: 'inline'})
+    ToastrModule.forRoot()
   ],
   declarations: [
     DashboardComponent,
