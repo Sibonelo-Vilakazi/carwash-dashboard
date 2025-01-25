@@ -3,7 +3,7 @@
 // dotenv.config();
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:3007',
+  baseUrl: 'https://us-central1-easy-wash-68220.cloudfunctions.net/api',
   // apiKey: process.env.API_KEY,
   // authDomain: process.env.AUTH_DOMAIN,
   // projectId: process.env.PROJECT_ID,
