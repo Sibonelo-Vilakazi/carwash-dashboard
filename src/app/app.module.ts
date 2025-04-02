@@ -23,6 +23,8 @@ import {AppCheckModule} from '@angular/fire/app-check';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { BranchesComponent } from './pages/branches/branches.component';
+import { BranchAddDeleteComponent } from './pages/branch-add-delete/branch-add-delete.component';
 
 @NgModule({
   imports: [
@@ -30,6 +32,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     FormsModule,
     HttpClientModule,
     ComponentsModule,
+    
     NgbModule,
     BrowserModule,
     RouterModule,
@@ -44,6 +47,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     AdminLayoutComponent,
     AuthLayoutComponent,
     BookingsComponent,
+    BranchesComponent,
   ],
   providers: [ToastrService],
   bootstrap: [AppComponent]

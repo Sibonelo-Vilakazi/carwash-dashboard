@@ -10,6 +10,9 @@ import { PackageDetailComponent } from 'src/app/pages/package-detail/package-det
 import { BookingsComponent } from 'src/app/pages/bookings/bookings.component';
 import { BookingDetailComponent } from 'src/app/pages/booking-detail/booking-detail.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
+import { NavbarComponent } from 'src/app/components/navbar/navbar.component';
+import { BranchesComponent } from 'src/app/pages/branches/branches.component';
+import { BranchAddDeleteComponent } from 'src/app/pages/branch-add-delete/branch-add-delete.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent, canActivate: [AuthGuard] },
@@ -23,5 +26,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'bookings',     component: BookingsComponent, canActivate: [AuthGuard]},
     { path: 'booking/edit/:bookingId',     component: BookingDetailComponent, canActivate: [AuthGuard] },
     { path: 'booking/create',     component: BookingDetailComponent, canActivate: [AuthGuard] },
+    { path: 'branch/create',     component: BranchAddDeleteComponent, canActivate: [AuthGuard] },
+    { path: 'branch/edit/:branchId',     component: BranchAddDeleteComponent, canActivate: [AuthGuard] },
+    { path: 'cars',     component: NavbarComponent},
+    { path: 'branches', component: BranchesComponent}
 
 ];

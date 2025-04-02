@@ -1,0 +1,55 @@
+{
+  "hosting": {
+    "public": "public",
+    "appAssociation": "NONE",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/deeplinks",
+        "destination": "/assets/apple-app-site-association"
+      },
+      {
+        "source": "/.well-known/apple-app-site-association",
+        "destination": "/assets/apple-app-site-association"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+      
+    ],
+    "headers": [
+      {
+        "source": "/deeplinks",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      {
+        "source": "/.well-known/apple-app-site-association",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      {
+        "source": "/apple-app-site-association",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    ]
+  }
+}

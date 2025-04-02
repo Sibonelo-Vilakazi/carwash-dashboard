@@ -7,6 +7,7 @@ import { ProgressStats } from '../interfaces/models/progress-stats.interface';
 import { AdminUser } from '../interfaces/models/admin-user.interface';
 import { YearlyRevenueData } from '../interfaces/models/yearly-revenue.interface';
 import { ServicePackageRevenueData } from '../interfaces/models/service-package-revenue-data.interface';
+import { CreateBranch } from '../interfaces/models/create-branch.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -73,5 +74,17 @@ export class DataAccessService {
 
   getServicePackageRevenue(){
     return this.httpClient.get<ServicePackageRevenueData>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGE_REVENUE));
+  }
+
+  createBranches(data: CreateBranch){
+    return this.httpClient.post(this.genericService.builderUrl(Endpoints.CREATE_BRANCH), data);
+  }
+
+  getBranches(){
+    return this.httpClient.get<CreateBranch[]>(this.genericService.builderUrl(Endpoints.GET_BRANCHES));
+  }
+
+  getBranchesByUserId(user_id: string){
+    return this.httpClient.get<CreateBranch[]>(this.genericService.builderUrl(Endpoints.GET_BRANCHES_BY_USER(user_id)));
   }
 }

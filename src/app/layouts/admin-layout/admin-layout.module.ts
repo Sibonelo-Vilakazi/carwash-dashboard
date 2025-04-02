@@ -17,6 +17,7 @@ import { PackageDetailComponent } from 'src/app/pages/package-detail/package-det
 import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/delete-modal.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { BookingDetailComponent } from 'src/app/pages/booking-detail/booking-detail.component';
+import { BranchAddDeleteComponent } from 'src/app/pages/branch-add-delete/branch-add-delete.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { BookingDetailComponent } from 'src/app/pages/booking-detail/booking-det
     ServicePackagesComponent,
     PackageDetailComponent,
     DeleteModalComponent,
-    BookingDetailComponent
+    BookingDetailComponent,
+    BranchAddDeleteComponent
   ],
   providers: [ToastrService]
 })
