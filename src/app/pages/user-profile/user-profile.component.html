@@ -141,7 +141,7 @@
             </div>
 
             <div class="col-4 text-left">
-              <button [disabled]="businessForm.invalid" (click)="isEdit ? handleUpdate() : onSubmit()"class="btn w-100 py-3 btn-sm btn-primary">
+              <button [disabled]="businessForm.invalid || isSubmitting" (click)="isEdit ? handleUpdate() : onSubmit()"class="btn w-100 py-3 btn-sm btn-primary">
                 {{isEdit ? 'Update Business' : 'Create Business'}}</button>
             </div>
           </form>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { BusinessDto } from 'src/app/interfaces/models/Business';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataAccessService } from 'src/app/services/data-access.service';
@@ -21,23 +22,23 @@ export class UserProfileComponent implements OnInit {
     logo_url: ['', Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
     description: ['', Validators.maxLength(500)],
     super_admin: [''],
-    admin: ['']
+    admins: ['']
   });
 
   isSubmitting: boolean = false;
   isEdit: boolean = false;
   
   constructor(private fb: FormBuilder, private dataAccessService: DataAccessService,
-    private authService: AuthService
+    private authService: AuthService, private toasterService: ToastrService
   ) { }
 
   ngOnInit() {
-  
+    
   }
 
 
   onSubmit(): void {
-    const user_id: string = this.authService.getUserFromLocalStorage().data.user_id
+    const user_id: string = this.authService.getUserFromLocalStorage().data.user_id;
     if (this.businessForm.invalid) {
       this.markFormGroupTouched(this.businessForm);
       return;
@@ -49,9 +50,19 @@ export class UserProfileComponent implements OnInit {
     // Here you would typically call your service to save the data
     console.log('Submitting business data:', businessData);
     
+    this.dataAccessService.createBusinessProfile(businessData).subscribe({
+      next: (res: any) =>{
+        this.toasterService.success('You have successfully create a business');
+        this.isSubmitting = false;
+      },
+      error: (err) =>{
+        this.toasterService.error(err.message);
+        this.isSubmitting = false;
+      }
+    })
     // Reset form after submission if needed
     // this.businessForm.reset();
-    this.isSubmitting = false;
+  
   }
 
   handleUpdate() {

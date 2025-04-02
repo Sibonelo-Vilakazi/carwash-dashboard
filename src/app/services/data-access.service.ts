@@ -8,6 +8,7 @@ import { AdminUser } from '../interfaces/models/admin-user.interface';
 import { YearlyRevenueData } from '../interfaces/models/yearly-revenue.interface';
 import { ServicePackageRevenueData } from '../interfaces/models/service-package-revenue-data.interface';
 import { CreateBranch } from '../interfaces/models/create-branch.interface';
+import { BusinessDto } from '../interfaces/models/Business';
 
 @Injectable({
   providedIn: 'root'
@@ -87,4 +88,10 @@ export class DataAccessService {
   getBranchesByUserId(user_id: string){
     return this.httpClient.get<CreateBranch[]>(this.genericService.builderUrl(Endpoints.GET_BRANCHES_BY_USER(user_id)));
   }
+
+  createBusinessProfile (data: BusinessDto) {
+    return this.httpClient.post(this.genericService.builderUrl(Endpoints.CREATE_BUSINESS_INFORMATION), data);
+  }
+  
+  
 }

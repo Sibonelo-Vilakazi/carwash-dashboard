@@ -5,7 +5,7 @@ export class BusinessDto{
     logo_url: string;
     description: string
     super_admin?: string; // userId 
-    admin?: string   // userId 
+    admins?: string[]   // userId 
 }
 
 export class BusinessOwner{

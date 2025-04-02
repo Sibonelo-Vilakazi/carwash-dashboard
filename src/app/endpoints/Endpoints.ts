@@ -20,6 +20,8 @@ export class Endpoints{
     static GET_USER_BY_ID = (userId: string) => `user/getUser/${userId}`;
     
     static CREATE_BRANCH = 'business/createBranch';
+
+    static CREATE_BUSINESS_INFORMATION = 'business/createBusinessProfile';
     static GET_BRANCHES_BY_USER  = (userId: string) => `business/getBranchesByUser/${userId}`;
     static GET_BRANCHES = `business/getBranches`;
 }
