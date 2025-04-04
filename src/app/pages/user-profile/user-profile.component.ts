@@ -27,13 +27,38 @@ export class UserProfileComponent implements OnInit {
 
   isSubmitting: boolean = false;
   isEdit: boolean = false;
-  
+  businessData!: BusinessDto;
   constructor(private fb: FormBuilder, private dataAccessService: DataAccessService,
     private authService: AuthService, private toasterService: ToastrService
   ) { }
 
   ngOnInit() {
-    
+    const businessId = this.authService.getUserFromLocalStorage().data.businessId;
+    console.log({businessId})
+    this.dataAccessService.getBusinessById(businessId).subscribe({
+      next: (res: BusinessDto) =>{
+        console.log('res: ', res)
+        this.businessData = res;
+        this.isEdit = true;
+
+        this.businessForm = this.fb.group({
+          name: [this.businessData.name, [Validators.required, Validators.maxLength(100)]],
+          owner: this.fb.group({
+            name: [this.businessData.owner.name, Validators.required],
+            email: [this.businessData.owner.email, [Validators.required, Validators.email]],
+            phone: [this.businessData.owner.phone, Validators.pattern(/^[0-9]{10,15}$/)]
+          }),
+          logo_url: [this.businessData.logo_url, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
+          description: [this.businessData.description, Validators.maxLength(500)],
+          super_admin: [this.businessData.super_admin],
+          admins: []
+        })
+      },
+      error: (err: any) =>{
+        this.isEdit = false;
+        console.error(err);
+      }
+    })
   }
 
 
@@ -46,10 +71,11 @@ export class UserProfileComponent implements OnInit {
 
     this.isSubmitting = true;
     const businessData: BusinessDto = {...this.businessForm.value, super_admin: user_id, admins: []} as BusinessDto;
-    
+    if(this.isEdit){
+      businessData.id = this.businessData.id;
+      businessData.admins = this.businessData.admins;
+    }
     // Here you would typically call your service to save the data
-    console.log('Submitting business data:', businessData);
-    
     this.dataAccessService.createBusinessProfile(businessData).subscribe({
       next: (res: any) =>{
         this.toasterService.success('You have successfully create a business');

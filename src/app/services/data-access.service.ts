@@ -92,6 +92,10 @@ export class DataAccessService {
   createBusinessProfile (data: BusinessDto) {
     return this.httpClient.post(this.genericService.builderUrl(Endpoints.CREATE_BUSINESS_INFORMATION), data);
   }
+
+  getBusinessById(businessId: string) {
+    return this.httpClient.get<BusinessDto>(this.genericService.builderUrl(Endpoints.GET_BUSINESS_INFORMATION(businessId)));
+  }
   
   
 }
