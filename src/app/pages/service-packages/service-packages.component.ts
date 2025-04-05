@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/delete-modal.component';
 import { Endpoints } from 'src/app/endpoints/Endpoints';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataAccessService } from 'src/app/services/data-access.service';
 import { GenericHttpService } from 'src/app/services/generic-http.service';
 
@@ -17,13 +18,15 @@ export class ServicePackagesComponent implements OnInit {
   servicePackages: ServicePackages[] = [];
   constructor(private genericHttpService: GenericHttpService, private router: Router,
     private modalService: NgbModal, private dataAccessService: DataAccessService, 
-    private toasterService: ToastrService
+    private toasterService: ToastrService, private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.dataAccessService.getServicePackages().subscribe({
+    const businessId = this.authService.getUserFromLocalStorage().data.businessId;
+    this.dataAccessService.getServicePackagesByBusinessId(businessId).subscribe({
       next: (res: ServicePackages[]) => {
         this.servicePackages = res;
+        
       },
       error: (err: any) =>{
         console.error(err);

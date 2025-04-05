@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Branch } from 'src/app/interfaces/models/Branch';
 import { CreateBranch } from 'src/app/interfaces/models/create-branch.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataAccessService } from 'src/app/services/data-access.service';
@@ -13,25 +14,140 @@ import { DataAccessService } from 'src/app/services/data-access.service';
 })
 export class BranchAddDeleteComponent implements OnInit {
 
-  branchForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    location: new FormControl('', [Validators.required]),
-    startTime: new FormControl('', [Validators.required]),
-    endTime: new FormControl('', [Validators.required]),
-  });
+  // branchForm = new FormGroup({
+  //   name: new FormControl('', [Validators.required]),
+  //   location: new FormControl('', [Validators.required]),
+  //   startTime: new FormControl('', [Validators.required]),
+  //   endTime: new FormControl('', [Validators.required]),
+  // });
   servicePackages: ServicePackages[] = [];
   isEdit: boolean = false;
   userId: string = '';
+  branchId: string = '';
+  daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+  branchForm = this.fb.group({
+    name: ['', Validators.required],
+    location: ['', Validators.required],
+    lat: [''],
+    long: [''],
+    userId: [''],
+    employees: this.fb.array([]),
+    id: [''],
+    users: this.fb.array([]),
+    operating_hours: this.createOperatingHoursGroup(),
+    services: this.fb.array([]),
+    created_date: [new Date()],
+    status: [true],
+    businessId: ['']
+  });
+  businessId: string = '';
+
   constructor(private dataAccessService: DataAccessService, private router: Router, 
-    private toastrService: ToastrService, private authService: AuthService) { }
+    private toastrService: ToastrService, private authService: AuthService, private activatedRoute: ActivatedRoute,
+  private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    console.log('user: ', this.authService.getUserFromLocalStorage());
+    
     this.userId = this.authService.getUserFromLocalStorage().data.user_id;
+    this.businessId = this.authService.getUserFromLocalStorage().data.businessId;
+
+    this.dataAccessService.getServicePackagesByBusinessId(this.businessId ?? '').subscribe({
+      next: (res) => {
+        console.log('res: ', res);
+
+        this.servicePackages = res;
+      },
+      error: (err) =>{
+        console.error(err);
+      }
+    })
+    this.activatedRoute.params.subscribe({
+      next: (param: any) =>{
+        this.isEdit = false;
+        if(param.branchId){
+          
+          this.branchId = param.branchId;
+          this.dataAccessService.getBranchById(this.branchId).subscribe({
+            next: (res: any) => {
+              console.log('res: ', res);
+              const branch = res as Branch;
+              this.branchForm = this.fb.group({
+                name: [branch.name, Validators.required],
+                location: [branch.location, Validators.required],
+                lat: [branch.lat ?? ''],
+                long: [branch.long ?? ''],
+                userId: [branch.userId ?? ''],
+                employees: this.fb.array([]),
+                id: [this.branchId],
+                users: this.fb.array([]),
+                operating_hours: this.createOperatingHoursGroup(),
+                services: this.fb.array([]),
+                created_date: [new Date()],
+                status: [true],
+                businessId: [branch.businessId]
+              });
+              this.isEdit = true;
+            },
+            error: (err: any) =>{
+              this.isEdit = false;
+              console.error(err);
+            }
+          })
+        }else{
+          this.isEdit = false;
+        }
+      }
+    })
+
   }
 
-  handleUpdate() {
+  createOperatingHoursGroup(): FormGroup {
+    return this.fb.group({
+      monday: this.createDailyTimeGroup(),
+      tuesday: this.createDailyTimeGroup(),
+      wednesday: this.createDailyTimeGroup(),
+      thursday: this.createDailyTimeGroup(),
+      friday: this.createDailyTimeGroup(),
+      saturday: this.createDailyTimeGroup(),
+      sunday: this.createDailyTimeGroup()
+    });
+  }
 
+  createDailyTimeGroup(): FormGroup {
+    return this.fb.group({
+      isOpen: [true],
+      openTime: ['09:00'],
+      closeTime: ['17:00']
+    });
+  }
+
+  selectedPackage($event: any, service: ServicePackages){
+    if($event.target.checked){
+      const servicesArray = this.branchForm.get('services') as FormArray;
+      servicesArray.push(this.fb.group({
+        service_id: [service.service_id, Validators.required]
+      }));
+    } else {
+      const servicesArray = this.branchForm.get('services') as FormArray;
+      const index = servicesArray.controls.findIndex(x => x.get('service_id').value === service.service_id);
+      servicesArray.removeAt(index);
+    }
+  }
+
+  getChecked(id: string){
+    return (this.branchForm.get('services') as FormArray).controls.findIndex(x => x.get('service_id').value === id) >= 0;
+  }
+
+
+  handleUpdate() {
+    const branch: Branch = this.branchForm.value as Branch;
+
+    branch.services = branch.services.map((service) => {
+      return this.servicePackages.find((item) => item.service_id ===service.service_id);
+    });
+
+    console.log('branch: ', branch);
   }
 
   handleCreate(){
@@ -43,7 +159,6 @@ export class BranchAddDeleteComponent implements OnInit {
     data.users =[this.userId];
     this.dataAccessService.createBranches(data).subscribe({
       next: (res: any) =>{
-       
         this.toastrService.success('You have successfully create a branch');
         this.router.navigateByUrl('branches');
       },

@@ -18,12 +18,12 @@ export class BranchesComponent implements OnInit {
     private toastrService: ToastrService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.getBranches();
+    const businessId = this.authService.getUserFromLocalStorage().data.businessId;
+    this.getBranches(businessId);
   } 
 
-  getBranches() {
-    const userId = this.authService.getUserFromLocalStorage().data.user_id;
-    this.dataAccessService.getBranchesByUserId(userId).subscribe({
+  getBranches(businessId: string) {
+    this.dataAccessService.getBranchesByBusinessId(businessId).subscribe({
       next: (res: CreateBranch[]) => {
         this.branches = res;
       },
@@ -35,11 +35,14 @@ export class BranchesComponent implements OnInit {
 
   handleAddBranch() {
     // Open a modal/form to add a new branch
-    this.router.navigateByUrl('branch/create')
+    this.router.navigateByUrl('branch/create');
   }
   
   handleEditBranch(branchId: number) {
     // Edit logic
+
+    this.router.navigateByUrl(`branch/edit/${branchId}`);
+
   }
   
   handleDeleteBranch(branchId: number) {

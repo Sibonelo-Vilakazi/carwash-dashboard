@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="card-body">
-            <form [formGroup]="branchForm">
+            <form *ngIf="branchForm" [formGroup]="branchForm">
               <h6 class="heading-small text-muted mb-4">Branch information</h6>
               <div class="pl-lg-4">
                 <div class="row">
@@ -35,34 +35,82 @@
                       <input type="text" formControlName="location" id="input-price" class="form-control form-control-alternative" placeholder="Location">
                     </div>
                   </div>
-                  <div class="col-lg-2">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-username">Start Time</label>
-                      <input type="text" id="input-username" formControlName="startTime"  class="form-control form-control-alternative" placeholder="Operation Start">
-                    </div>
-                  </div>
-
-                  <div class="col-lg-2">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-username">End Time</label>
-                      <input type="text" id="input-username" formControlName="endTime"  class="form-control form-control-alternative" placeholder="Operation Start">
-                    </div>
-                  </div>
                   
                   <div *ngIf="servicePackages && servicePackages.length > 0" class="col-lg-{{columnNumber}}">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-username">Select Package</label>
-                        <div *ngFor="let item of servicePackages">{{item.name}}</div>
-                      <!-- <select [disabled]="isEdit" (change)="handleChange($event.target.value)"class="custom-select" id="inputGroupSelect02">
-                        <option *ngIf="!isEdit" disabled selected>Choose Package...</option>
-                        <option [selected]="(carWashBooking?.packageName ?? '') === item.name"  *ngFor="let item of servicePackages; let packageIndex = index" [value]="packageIndex">{{item.name}}</option>
-                      </select> -->
+                    <div class="form-group service-container">
+                      <!-- <label class="form-control-label" for="input-username">Select Package</label> -->
+                        <!-- <div >{{item.name}}</div> -->
+                        <label *ngFor="let item of servicePackages" class="package-checkbox">
+                            <input type="checkbox" [checked]="getChecked(item.id)" (change)="selectedPackage($event,item)" name="exterior-packages" >
+                            <span>{{item.name}}</span>
+                        </label>
                     </div>
                   </div>
+                </div>
 
-                 
-               
-              </div>
+                <!-- <div formGroupName="operating_hours">
+                    <div class="row">
+                        <h6 class="heading-small text-muted mb-4">Monday</h6>
+                        <div class="row col-12">
+                            <div formGroupName="monday" class="form-group col-lg-4">
+                                <label class="form-control-label" for="input-username">Open Time</label>
+                                <input type="text" id="input-username" formControlName="openTime"  class="form-control form-control-alternative" placeholder="Open Time">
+                            </div>
+                            <div formGroupName="monday" class="form-group col-lg-4">
+                                <label class="form-control-label" for="input-username">Close Time</label>
+                                <input type="text" id="input-username" formControlName="closeTime"  class="form-control form-control-alternative" placeholder="Close Time">
+                            </div>
+                        </div>
+                    
+                    </div>
+
+                    <div class="row">
+                        <h6 class="heading-small text-muted mb-4">Monday</h6>
+                        <div class="row col-12">
+                            <div formGroupName="monday" class="form-group col-lg-4">
+                                <label class="form-control-label" for="input-username">Open Time</label>
+                                <input type="text" id="input-username" formControlName="openTime"  class="form-control form-control-alternative" placeholder="Open Time">
+                            </div>
+                            <div formGroupName="monday" class="form-group col-lg-4">
+                                <label class="form-control-label" for="input-username">Close Time</label>
+                                <input type="text" id="input-username" formControlName="closeTime"  class="form-control form-control-alternative" placeholder="Close Time">
+                            </div>
+                        </div>
+                    
+                    </div>
+                    
+                </div> -->
+
+                <!-- Operating Hours Section -->
+                <div *ngIf="branchForm.get('operating_hours')" formGroupName="operating_hours" class="operating-hours">
+                    <h3 class="heading-small text-muted mb-4">Operating Hours</h3>
+                    
+                    <div *ngFor="let day of daysOfWeek" class="day-row">
+                    <h6 class="day-heading">{{ day | titlecase }}</h6>
+                    
+                    <div *ngIf="branchForm.get('operating_hours')?.get(day)" [formGroupName]="day" class="row time-inputs">
+                        <div *ngIf="branchForm.get('operating_hours').get(day).get('isOpen').value" class="col-6 form-group">
+                        <label class="form-control-label">Open Time</label>
+                        <input type="time" formControlName="openTime" class="form-control" 
+                                [disabled]="!branchForm.get('operating_hours').get(day).get('isOpen').value">
+                        </div>
+                        
+                        <div *ngIf="branchForm.get('operating_hours').get(day).get('isOpen').value" class="col-6 form-group">
+                        <label class="form-control-label">Close Time</label>
+                        <input type="time" formControlName="closeTime" class="form-control"
+                                [disabled]="!branchForm.get('operating_hours').get(day).get('isOpen').value">
+                        </div>
+                        
+                        <div class="form-group toggle">
+                        <label class="switch">
+                            <input type="checkbox" formControlName="isOpen">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="toggle-label">{{ branchForm.get('operating_hours').get(day).get('isOpen').value ? 'Open' : 'Closed' }}</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
               <hr class="my-4" />
               
               <div class="col-4 text-left">

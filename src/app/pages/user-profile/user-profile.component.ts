@@ -64,6 +64,7 @@ export class UserProfileComponent implements OnInit {
 
   onSubmit(): void {
     const user_id: string = this.authService.getUserFromLocalStorage().data.user_id;
+    console.log('user: ',this.businessForm.value)
     if (this.businessForm.invalid) {
       this.markFormGroupTouched(this.businessForm);
       return;
@@ -78,7 +79,14 @@ export class UserProfileComponent implements OnInit {
     // Here you would typically call your service to save the data
     this.dataAccessService.createBusinessProfile(businessData).subscribe({
       next: (res: any) =>{
-        this.toasterService.success('You have successfully create a business');
+
+        if(this.isEdit){
+          this.toasterService.success('You have successfully updated your business information');
+
+        }else {
+          this.toasterService.success('You have successfully create a business');
+
+        }
         this.isSubmitting = false;
       },
       error: (err) =>{

@@ -9,6 +9,7 @@ import { YearlyRevenueData } from '../interfaces/models/yearly-revenue.interface
 import { ServicePackageRevenueData } from '../interfaces/models/service-package-revenue-data.interface';
 import { CreateBranch } from '../interfaces/models/create-branch.interface';
 import { BusinessDto } from '../interfaces/models/Business';
+import { Branch } from '../interfaces/models/Branch';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,11 @@ export class DataAccessService {
   getServicePackages() {
     return this.httpClient.get<ServicePackages[]>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGES));
   }
+
+  getServicePackagesByBusinessId (businessId: string) {
+    return this.httpClient.get<ServicePackages[]>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGES_BY_BUSINESS_ID(businessId)));
+  }
+
   getServicePackageById(service_id: string) { 
     return this.httpClient.get<ServicePackages>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGES_BY_ID(service_id))); 
   }
@@ -85,8 +91,12 @@ export class DataAccessService {
     return this.httpClient.get<CreateBranch[]>(this.genericService.builderUrl(Endpoints.GET_BRANCHES));
   }
 
-  getBranchesByUserId(user_id: string){
-    return this.httpClient.get<CreateBranch[]>(this.genericService.builderUrl(Endpoints.GET_BRANCHES_BY_USER(user_id)));
+  getBranchesByBusinessId(businessId: string){
+    return this.httpClient.get<CreateBranch[]>(this.genericService.builderUrl(Endpoints.GET_BRANCHES_BY_BUESINESS_ID(businessId)));
+  }
+
+  getBranchById(branchId: string){
+    return this.httpClient.get<Branch[]>(this.genericService.builderUrl(Endpoints.GET_BRANCHES_BY_ID(branchId)));
   }
 
   createBusinessProfile (data: BusinessDto) {

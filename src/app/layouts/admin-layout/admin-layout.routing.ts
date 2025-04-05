@@ -29,6 +29,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'branch/create',     component: BranchAddDeleteComponent, canActivate: [AuthGuard] },
     { path: 'branch/edit/:branchId',     component: BranchAddDeleteComponent, canActivate: [AuthGuard] },
     { path: 'cars',     component: NavbarComponent},
-    { path: 'branches', component: BranchesComponent}
+    { path: 'branches', component: BranchesComponent},
+    { path: 'branch/edit/:branchId', component: BranchAddDeleteComponent, canActivate: [AuthGuard]}
+    
 
 ];

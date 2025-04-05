@@ -1,6 +1,9 @@
 export class Endpoints{
 
     static GET_SERVICE_PACKAGES = 'business/service-packages';
+
+    static GET_SERVICE_PACKAGES_BY_BUSINESS_ID = (businessId: string) => `business/getBusinessPackagesByBusinessId/${businessId}`;
+    
     static GET_SERVICE_PACKAGES_BY_ID = (service_id: string)  => `business/service-packages/${service_id}`;
     static UPDATE_SERVICE_PACKAGES   = `business/service-packages/updateServicePackage`;
     static CREATE_SERVICE_PACKAGES   = `business/service-packages/createServicePackage`;
@@ -23,6 +26,7 @@ export class Endpoints{
 
     static CREATE_BUSINESS_INFORMATION = 'business/createBusinessProfile';
     static GET_BUSINESS_INFORMATION = (businessId: string)  => `business/getBusinessProfile/${businessId}`;
-    static GET_BRANCHES_BY_USER  = (userId: string) => `business/getBranchesByUser/${userId}`;
+    static GET_BRANCHES_BY_BUESINESS_ID  = (businessId: string) => `business/getBranchesByBusinessId/${businessId}`;
+    static GET_BRANCHES_BY_ID = (branchId: string) => `business/getBranchById/${branchId}`;
     static GET_BRANCHES = `business/getBranches`;
 }

@@ -136,12 +136,12 @@
             <div class="pl-lg-4">
               <div class="form-group">
                 <label>Short description</label>
-                <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about your business ..."></textarea>
+                <textarea formControlName="description" rows="4" class="form-control form-control-alternative" placeholder="A few words about your business ..."></textarea>
               </div>
             </div>
 
             <div class="col-4 text-left">
-              <button [disabled]="businessForm.invalid || isSubmitting" (click)="isEdit ? handleUpdate() : onSubmit()"class="btn w-100 py-3 btn-sm btn-primary">
+              <button [disabled]="businessForm.invalid || isSubmitting" (click)="isEdit ? onSubmit() : onSubmit()"class="btn w-100 py-3 btn-sm btn-primary">
                 {{isEdit ? 'Update Business' : 'Create Business'}}</button>
             </div>
           </form>
