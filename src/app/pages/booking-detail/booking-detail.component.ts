@@ -8,6 +8,7 @@ import { PaymentStatus } from 'src/app/enums/PaymentStatus.enum';
 import { PaymentTypes } from 'src/app/enums/payment-type.enum';
 import { generateOrderId } from 'src/app/helpers/helpers';
 import { CarWashBooking } from 'src/app/interfaces/models/carwash-booking.interface';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataAccessService } from 'src/app/services/data-access.service';
 
 @Component({
@@ -36,7 +37,8 @@ export class BookingDetailComponent implements OnInit {
   packageObservable: Subject<boolean> =new Subject();
   constructor(private dataAccessService: DataAccessService, private fb: FormBuilder,
     private toastrService: ToastrService, private router: Router, 
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -57,8 +59,9 @@ export class BookingDetailComponent implements OnInit {
       }else {
         this.allPaymentMethods = this.getPaymentMethods(true);
       }
-    })
-    this.dataAccessService.getServicePackages().subscribe({
+    });
+    const businessId = this.authService.getUserFromLocalStorage().data.businessId;
+    this.dataAccessService.getServicePackagesByBusinessId(businessId).subscribe({
       next: (res: ServicePackages[]) => {
         this.servicePackages = res;
        

@@ -14,6 +14,7 @@ import { ServicePackageRevenueData } from 'src/app/interfaces/models/service-pac
 import { error } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { ProgressStatsCardConfig } from 'src/app/interfaces/ui-config/progress-stats-card-config.interface';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +32,7 @@ export class DashboardComponent implements OnInit {
   revenueCards: ProgressStatsCardConfig[] = [];
   servicePackageRevenueData!: ServicePackageRevenueData;
   chartLabel = 'Revenue';
-  constructor(private dataAccessService: DataAccessService){}
+  constructor(private dataAccessService: DataAccessService, private authService: AuthService){}
 
   ngOnInit() {
 
@@ -40,12 +41,14 @@ export class DashboardComponent implements OnInit {
       [0, 20, 5, 25, 10, 30, 15, 40, 40]
     ];
     this.data = this.datasets[0];
-
-    this.getServicePackageRevenue();
+    const businessId = this.authService.getUserFromLocalStorage().data.businessId;
+    const year = new Date().getFullYear();
+    this.getServicePackageRevenue(businessId, year);
     var chartOrders = document.getElementById('chart-orders');
 
     parseOptions(Chart, chartOptions());
 
+    
     
     var ordersChart = new Chart(chartOrders, {
       type: 'bar',
@@ -54,9 +57,10 @@ export class DashboardComponent implements OnInit {
     });
 
     var chartSales = document.getElementById('chart-sales');
-
-    this.dataAccessService.getYearlyRevenue().subscribe({
+    
+    this.dataAccessService.getYearlyRevenueByBusinessId(businessId, year).subscribe({
       next: (res: YearlyRevenueData) => {
+        console.log('res: ', res);
         const salesAmounts =  [];
         this.datasets[1] = []
         Object.keys(res).map((key) =>{
@@ -78,9 +82,10 @@ export class DashboardComponent implements OnInit {
     
   }
 
-  getServicePackageRevenue() {
+  getServicePackageRevenue(businessId: string, year: number) {
     this.revenueCards = [];
-    this.dataAccessService.getServicePackageRevenue().subscribe({
+    
+    this.dataAccessService.getServicePackageRevenueByBusinessId(businessId, year).subscribe({
       next: (res: ServicePackageRevenueData) =>{
         this.servicePackageRevenueData = res;
         this.revenueCards.push({

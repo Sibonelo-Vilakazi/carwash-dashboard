@@ -36,12 +36,12 @@
                     </div>
                   </div>
                   
-                  <div *ngIf="servicePackages && servicePackages.length > 0" class="col-lg-{{columnNumber}}">
+                  <div *ngIf="servicePackages && servicePackages.length > 0 && this.branchForm.get('services')" class="col-lg-{{columnNumber}}">
                     <div class="form-group service-container">
                       <!-- <label class="form-control-label" for="input-username">Select Package</label> -->
                         <!-- <div >{{item.name}}</div> -->
                         <label *ngFor="let item of servicePackages" class="package-checkbox">
-                            <input type="checkbox" [checked]="getChecked(item.id)" (change)="selectedPackage($event,item)" name="exterior-packages" >
+                            <input type="checkbox" [checked]="getChecked(item.service_id)" (change)="selectedPackage($event,item)" name="exterior-packages" >
                             <span>{{item.name}}</span>
                         </label>
                     </div>

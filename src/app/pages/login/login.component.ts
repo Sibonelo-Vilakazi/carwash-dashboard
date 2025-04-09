@@ -39,11 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         if(result){
           this.dataAccessService.getUser(result.uid).subscribe( {
             next: (res: AdminUser) => {
-             
-              // if(res.role !== UserRoles.ADMIN){
-              //   this.toastrService.error('Unauthorized user');
-              //   return;
-              // }
               this.authService.setUserFromLocalStorage(res);
               this.authService.setAccessToken(tokenResult.token);
               this.router.navigateByUrl('dashboard');

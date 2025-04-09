@@ -26,7 +26,7 @@ export class BranchAddDeleteComponent implements OnInit {
   branchId: string = '';
   daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
-  branchForm = this.fb.group({
+  branchForm = this.fb.group<any>({
     name: ['', Validators.required],
     location: ['', Validators.required],
     lat: [''],
@@ -54,8 +54,6 @@ export class BranchAddDeleteComponent implements OnInit {
 
     this.dataAccessService.getServicePackagesByBusinessId(this.businessId ?? '').subscribe({
       next: (res) => {
-        console.log('res: ', res);
-
         this.servicePackages = res;
       },
       error: (err) =>{
@@ -69,10 +67,10 @@ export class BranchAddDeleteComponent implements OnInit {
           
           this.branchId = param.branchId;
           this.dataAccessService.getBranchById(this.branchId).subscribe({
-            next: (res: any) => {
-              console.log('res: ', res);
+            next: (res: Branch) => {
+              
               const branch = res as Branch;
-              this.branchForm = this.fb.group({
+              this.branchForm = this.fb.group<any>({
                 name: [branch.name, Validators.required],
                 location: [branch.location, Validators.required],
                 lat: [branch.lat ?? ''],
@@ -87,6 +85,16 @@ export class BranchAddDeleteComponent implements OnInit {
                 status: [true],
                 businessId: [branch.businessId]
               });
+
+              const servicesArray = this.branchForm.get('services') as FormArray;
+
+              res?.services?.map((service: ServicePackages) => 
+                (this.branchForm.get('services') as FormArray).push(this.fb.group({
+                  service_id: [service.service_id, Validators.required]
+                }))
+              );
+              
+              console.log('res: ', this.branchForm.value);
               this.isEdit = true;
             },
             error: (err: any) =>{
@@ -136,28 +144,40 @@ export class BranchAddDeleteComponent implements OnInit {
   }
 
   getChecked(id: string){
-    return (this.branchForm.get('services') as FormArray).controls.findIndex(x => x.get('service_id').value === id) >= 0;
+    const serviceArray = (this.branchForm.get('services') as FormArray);
+    console.log('serviceArray.value.findIndex(x => x.service_id === id): ', id);
+    return (serviceArray).controls.findIndex((x: any) => x.get('service_id') === id) >= 0;
   }
 
 
   handleUpdate() {
-    const branch: Branch = this.branchForm.value as Branch;
+    const branch: Branch = this.branchForm.value as unknown as Branch;
 
     branch.services = branch.services.map((service) => {
       return this.servicePackages.find((item) => item.service_id ===service.service_id);
     });
 
-    console.log('branch: ', branch);
+    this.dataAccessService.createBranches(branch as any).subscribe({
+      next: (res: any) =>{
+        this.toastrService.success('You have successfully updated a branch');
+        this.router.navigateByUrl('branches');
+      },
+      error: (err: any) =>{
+        this.toastrService.error('Something went wrong when trying to create a branch');
+        console.error(err);
+      }
+    })
   }
 
   handleCreate(){
     if (this.branchForm.invalid){
       return;
     }
-    const data = this.branchForm.value as CreateBranch;
+    const data = this.branchForm.value as unknown as Branch;
     data.userId = this.userId;
     data.users =[this.userId];
-    this.dataAccessService.createBranches(data).subscribe({
+    data.businessId = this.businessId;
+    this.dataAccessService.createBranches(data as any).subscribe({
       next: (res: any) =>{
         this.toastrService.success('You have successfully create a branch');
         this.router.navigateByUrl('branches');
@@ -168,5 +188,8 @@ export class BranchAddDeleteComponent implements OnInit {
       }
     })
   }
+
+
+
 
 }

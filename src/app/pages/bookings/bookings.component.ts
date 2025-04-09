@@ -5,6 +5,7 @@ import { BookingStatus } from 'src/app/enums/BookingStatus.enum';
 import { CarWashBooking } from 'src/app/interfaces/models/carwash-booking.interface';
 import { ProgressStats } from 'src/app/interfaces/models/progress-stats.interface';
 import { ProgressStatsCardConfig } from 'src/app/interfaces/ui-config/progress-stats-card-config.interface';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataAccessService } from 'src/app/services/data-access.service';
 import { environment } from 'src/environments/environment';
 
@@ -19,14 +20,15 @@ export class BookingsComponent implements OnInit {
   progressStats!: ProgressStats;
   progressStatusCardConfig: ProgressStatsCardConfig[] = [];
   constructor(private dataAccessService: DataAccessService, private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService, private authService: AuthService
   ) { }
 
 
 
   ngOnInit(): void {
-
-    this.dataAccessService.getProgressStatsCount().subscribe({
+    const businessId = this.authService.getUserFromLocalStorage().data.businessId;
+    const year = new Date().getFullYear();
+    this.dataAccessService.getProgressStatsCountBusinessId(businessId, year).subscribe({
       next: (res: ProgressStats) =>{
         this.progressStats = res;
         this.progressStatusCardConfig = []
@@ -60,7 +62,7 @@ export class BookingsComponent implements OnInit {
         console.error(error);
       }
     })
-    this.dataAccessService.getAllBookings().subscribe({
+    this.dataAccessService.getAllBookingsByBusinessId(businessId).subscribe({
       next: (res: CarWashBooking[]) =>{
         this.bookings = res;
       },

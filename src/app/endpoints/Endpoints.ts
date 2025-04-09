@@ -11,6 +11,7 @@ export class Endpoints{
     static Deactivate_SERVICE_PACKAGES = (service_id: string) => `business/service-packages/deactivateServicePackageById/${service_id}`;
 
     static GET_ALL_BOOKINGS = `bookings/getAllBookings`;
+    static GET_ALL_BOOKINGS_BUSINESS = (businessId: string) => `bookings/getAllBookingsByBusinessId/${businessId}`;
     static GET_BOOKING_BY_ID = (bookingId: string) => `bookings/getBookingById/${bookingId}`; 
 
     static UPDATE_BOOKING_STATUS = 'bookings/updateBookingStatus';
@@ -18,6 +19,9 @@ export class Endpoints{
     static Booking_CAR_WASH = `bookings/createBooking`;
 
     static GET_PROGRES_STATS_Count = 'dashboard/getProcessStatusCount';
+    static GET_PROGRES_STATS_Count_BUSINESS = (businessId: string, year:number) => `dashboard/getProcessStatusCountByBusinessId/${businessId}?year=${year}`;
+    static GET_YEARLY_REVENUE_BUSINESS = (businessId: string, year: number) => `dashboard/getYearlyRevenueByBusinessId/${businessId}?year=${year}`;
+    static GET_SERVICE_PACKAGE_REVENUE_BUSINESS = (businessId: string, year: number) => `dashboard/getServicePackageRevenueByBusinessId/${businessId}?year=${year}`
     static GET_YEARLY_REVENUE = 'dashboard/getYearlyRevenue';
     static GET_SERVICE_PACKAGE_REVENUE = 'dashboard/getServicePackageRevenue'
     static GET_USER_BY_ID = (userId: string) => `user/getUser/${userId}`;
@@ -29,4 +33,7 @@ export class Endpoints{
     static GET_BRANCHES_BY_BUESINESS_ID  = (businessId: string) => `business/getBranchesByBusinessId/${businessId}`;
     static GET_BRANCHES_BY_ID = (branchId: string) => `business/getBranchById/${branchId}`;
     static GET_BRANCHES = `business/getBranches`;
+
+
+    static CREATE_ADMIN = 'user/createAdmin';
 }

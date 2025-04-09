@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataAccessService } from 'src/app/services/data-access.service';
 
 @Component({
@@ -22,12 +23,12 @@ export class PackageDetailComponent implements OnInit {
   serviceId: string = ''
   isLoadingData = false;
   isEdit = false;
-
+  businessId: string ='';
   constructor(private fb: FormBuilder, private dataAccessService: DataAccessService, 
-    private activatedRoute: ActivatedRoute, private router: Router) { }
+    private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService) { }
   
   ngOnInit(): void {
-    
+    this.businessId = this.authService.getUserFromLocalStorage().data.businessId;
     this.activatedRoute.params.subscribe((params: any) => {
       this.serviceId= params.service_id;
   
@@ -113,7 +114,7 @@ export class PackageDetailComponent implements OnInit {
     const data = {...this.servicePackageForm.value};
     delete data.item;
     const submitValue: ServicePackages = data;
-    submitValue.business_id = 'y0T45Qeg7SWqpva7F7qO';
+    submitValue.business_id = this.businessId;
     submitValue.image = "test-image";
     submitValue.service_id="new";
     if (submitValue.items.length === 0) {

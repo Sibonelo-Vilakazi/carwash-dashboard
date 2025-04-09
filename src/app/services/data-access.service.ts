@@ -35,6 +35,12 @@ export class DataAccessService {
     return this.httpClient.get<CarWashBooking[]>(this.genericService.builderUrl(Endpoints.GET_ALL_BOOKINGS)); 
   }
 
+
+  getAllBookingsByBusinessId(businessId: string) { 
+    return this.httpClient.get<CarWashBooking[]>(this.genericService.builderUrl(Endpoints.GET_ALL_BOOKINGS_BUSINESS(businessId))); 
+  }
+
+
   getBookingByBookingId(bookingId: string) { 
     return this.httpClient.get<CarWashBooking>(this.genericService.builderUrl(Endpoints.GET_BOOKING_BY_ID(bookingId))); 
   }
@@ -75,13 +81,27 @@ export class DataAccessService {
     return this.httpClient.get<YearlyRevenueData>(this.genericService.builderUrl(Endpoints.GET_YEARLY_REVENUE));
   }
 
+  getServicePackageRevenue(){
+    return this.httpClient.get<ServicePackageRevenueData>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGE_REVENUE));
+  }
+
+  getProgressStatsCountBusinessId(businessId: string, year = 2024){
+    return this.httpClient.get<ProgressStats>(this.genericService.builderUrl(Endpoints.GET_PROGRES_STATS_Count_BUSINESS(businessId, year)));
+  }
+
+  getYearlyRevenueByBusinessId(businessId: string,  year = 2024){
+    return this.httpClient.get<YearlyRevenueData>(this.genericService.builderUrl(Endpoints.GET_YEARLY_REVENUE_BUSINESS(businessId, year)));
+  }
+
+  getServicePackageRevenueByBusinessId(businessId: string, year = 2024){
+    return this.httpClient.get<ServicePackageRevenueData>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGE_REVENUE_BUSINESS(businessId,year)));
+  }
+
   getUser(userId: string) {
     return this.httpClient.get<AdminUser>(this.genericService.builderUrl(Endpoints.GET_USER_BY_ID(userId)));
   }
 
-  getServicePackageRevenue(){
-    return this.httpClient.get<ServicePackageRevenueData>(this.genericService.builderUrl(Endpoints.GET_SERVICE_PACKAGE_REVENUE));
-  }
+  
 
   createBranches(data: CreateBranch){
     return this.httpClient.post(this.genericService.builderUrl(Endpoints.CREATE_BRANCH), data);
@@ -96,7 +116,7 @@ export class DataAccessService {
   }
 
   getBranchById(branchId: string){
-    return this.httpClient.get<Branch[]>(this.genericService.builderUrl(Endpoints.GET_BRANCHES_BY_ID(branchId)));
+    return this.httpClient.get<Branch>(this.genericService.builderUrl(Endpoints.GET_BRANCHES_BY_ID(branchId)));
   }
 
   createBusinessProfile (data: BusinessDto) {
@@ -106,6 +126,9 @@ export class DataAccessService {
   getBusinessById(businessId: string) {
     return this.httpClient.get<BusinessDto>(this.genericService.builderUrl(Endpoints.GET_BUSINESS_INFORMATION(businessId)));
   }
-  
+
+  createSuperAdmin(data: AdminUser) {
+    return this.httpClient.post(this.genericService.builderUrl(Endpoints.CREATE_ADMIN), data);
+  }
   
 }
