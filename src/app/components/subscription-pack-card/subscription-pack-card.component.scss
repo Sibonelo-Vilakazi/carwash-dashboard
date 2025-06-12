@@ -1,0 +1,73 @@
+.card {
+    width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: white;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+  }
+  
+  .card-header {
+    background: linear-gradient(87deg, #f5365c 0, #f56036 100%);
+    color: white;
+    padding: 30px 20px;
+  }
+  
+  .price {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+    border-top: 1px solid white;
+    padding-top: 10px;
+  }
+  
+  .features {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .features li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    margin-right: 10px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #b76df1;
+  }
+  
+  .icon.cross {
+    background-color: #d1b0f6;
+  }
+  
+  .select-button {
+    background: linear-gradient(87deg, #f5365c 0, #f56036 100%);
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .select-button:hover {
+    background: linear-gradient(to right, #a065e8, #b76df1);
+  }
+  

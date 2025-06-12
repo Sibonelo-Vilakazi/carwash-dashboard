@@ -18,6 +18,8 @@ import { DeleteModalComponent } from 'src/app/components/modals/delete-modal/del
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { BookingDetailComponent } from 'src/app/pages/booking-detail/booking-detail.component';
 import { BranchAddDeleteComponent } from 'src/app/pages/branch-add-delete/branch-add-delete.component';
+import { PurchaseSubscriptionComponent } from 'src/app/pages/purchase-subscription/purchase-subscription.component';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -28,7 +30,8 @@ import { BranchAddDeleteComponent } from 'src/app/pages/branch-add-delete/branch
     HttpClientModule,
     NgbModule,
     ClipboardModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ComponentsModule
   ],
   declarations: [
     DashboardComponent,
@@ -40,7 +43,8 @@ import { BranchAddDeleteComponent } from 'src/app/pages/branch-add-delete/branch
     PackageDetailComponent,
     DeleteModalComponent,
     BookingDetailComponent,
-    BranchAddDeleteComponent
+    BranchAddDeleteComponent,
+    PurchaseSubscriptionComponent,
   ],
   providers: [ToastrService]
 })

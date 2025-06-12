@@ -36,4 +36,10 @@ export class Endpoints{
 
 
     static CREATE_ADMIN = 'user/createAdmin';
+
+    static SUBSCRIPTION_STATUS = (businessId: string) => `subscriptions/status/${businessId}`;
+    // transactions 
+    static SUBSCRIPTION_INITIALIZATION = `transactions/initiateBranchSubscriptionPayment`
+    static GET_SUBSCRIPTIONS = `subscriptions/getAllSubscriptions`;
+    
 }

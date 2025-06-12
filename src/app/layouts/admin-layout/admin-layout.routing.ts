@@ -13,10 +13,12 @@ import { AuthGuard } from 'src/app/guards/auth.guard';
 import { NavbarComponent } from 'src/app/components/navbar/navbar.component';
 import { BranchesComponent } from 'src/app/pages/branches/branches.component';
 import { BranchAddDeleteComponent } from 'src/app/pages/branch-add-delete/branch-add-delete.component';
+import { SubscriptionGuard } from 'src/app/guards/subscription.guard';
+import { PurchaseSubscriptionComponent } from 'src/app/pages/purchase-subscription/purchase-subscription.component';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent, canActivate: [AuthGuard] },
-    { path: 'user-profile',   component: UserProfileComponent, canActivate: [AuthGuard] },
+    { path: 'dashboard',      component: DashboardComponent, canActivate: [AuthGuard, SubscriptionGuard] },
+    { path: 'user-profile',   component: UserProfileComponent, canActivate: [AuthGuard, SubscriptionGuard] },
     { path: 'tables',         component: TablesComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
@@ -30,7 +32,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'branch/edit/:branchId',     component: BranchAddDeleteComponent, canActivate: [AuthGuard] },
     { path: 'cars',     component: NavbarComponent},
     { path: 'branches', component: BranchesComponent},
-    { path: 'branch/edit/:branchId', component: BranchAddDeleteComponent, canActivate: [AuthGuard]}
+    { path: 'branch/edit/:branchId', component: BranchAddDeleteComponent, canActivate: [AuthGuard]},
+    { path: 'purchase-subscription', component: PurchaseSubscriptionComponent, canActivate: [AuthGuard]}
     
 
 ];

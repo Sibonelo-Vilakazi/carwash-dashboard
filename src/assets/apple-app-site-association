@@ -4,7 +4,10 @@
     "details": [
       {
         "appID": "29NKWAACTQ.com.easy-wash",
-        "paths": ["/cars"]
+        "paths": ["/"],
+          "fallback": {
+            "url": "easy-wash-68220.web.app"
+        }
       }
     ]
   }

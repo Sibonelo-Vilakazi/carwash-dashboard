@@ -1,0 +1,14 @@
+<div *ngIf="data" class="card">
+    <div class="card-header">
+      <h2>{{data.name}}</h2>
+      <p class="price">{{data.price | currency: 'R '  }}</p>
+    </div>
+    <ul class="features">
+      <li><span class="icon check">&#10004;</span>{{data.totalBranches}} Branches</li>
+      <!-- <li><span class="icon cross">&#10006;</span> Lorem ipsum dolor sit amet</li> -->
+      
+    </ul>
+    <button (click)="handleMakePurchase()" class="select-button">Subscribe
+      
+    </button>
+  </div>

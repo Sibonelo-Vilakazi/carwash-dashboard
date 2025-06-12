@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmationModalComponent } from 'src/app/components/modals/confirmation-modal/confirmation-modal.component';
 import { BookingStatus } from 'src/app/enums/BookingStatus.enum';
+import { convertTimestampTodate, stripTime } from 'src/app/helpers/helpers';
 import { CarWashBooking } from 'src/app/interfaces/models/carwash-booking.interface';
 import { ProgressStats } from 'src/app/interfaces/models/progress-stats.interface';
+import { SubscriptionStatusResponse } from 'src/app/interfaces/models/subscription-status-response.interface';
+import { ConfirmationModal } from 'src/app/interfaces/ui-config/confirmation-modal.interface';
 import { ProgressStatsCardConfig } from 'src/app/interfaces/ui-config/progress-stats-card-config.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataAccessService } from 'src/app/services/data-access.service';
+import { SubscriptionService } from 'src/app/services/subscription.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,18 +23,20 @@ import { environment } from 'src/environments/environment';
 export class BookingsComponent implements OnInit {
 
   bookings: CarWashBooking[] = [];
+  businessId: string = '';
   progressStats!: ProgressStats;
   progressStatusCardConfig: ProgressStatsCardConfig[] = [];
   constructor(private dataAccessService: DataAccessService, private router: Router,
-    private toastrService: ToastrService, private authService: AuthService
+    private toastrService: ToastrService, private authService: AuthService, private subscriptionService: SubscriptionService,
+    private modalService: NgbModal
   ) { }
 
 
 
   ngOnInit(): void {
-    const businessId = this.authService.getUserFromLocalStorage().data.businessId;
+    this.businessId = this.authService.getUserFromLocalStorage().data.businessId;
     const year = new Date().getFullYear();
-    this.dataAccessService.getProgressStatsCountBusinessId(businessId, year).subscribe({
+    this.dataAccessService.getProgressStatsCountBusinessId(this.businessId, year).subscribe({
       next: (res: ProgressStats) =>{
         this.progressStats = res;
         this.progressStatusCardConfig = []
@@ -62,7 +70,7 @@ export class BookingsComponent implements OnInit {
         console.error(error);
       }
     })
-    this.dataAccessService.getAllBookingsByBusinessId(businessId).subscribe({
+    this.dataAccessService.getAllBookingsByBusinessId(this.businessId).subscribe({
       next: (res: CarWashBooking[]) =>{
         this.bookings = res;
       },
@@ -78,6 +86,7 @@ export class BookingsComponent implements OnInit {
   } 
 
   handleCreateBooking() {
+    
     this.router.navigateByUrl('booking/create');
   }
 
@@ -105,6 +114,8 @@ export class BookingsComponent implements OnInit {
       return status
     })  
   }
+
+  
 
   handleChangeStatus(bookingId: string, status: string, index: number){
     const data = { bookingId, status};

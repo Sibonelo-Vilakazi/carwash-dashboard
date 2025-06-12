@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SubscriptionGuard } from './guards/subscription.guard';
 
 const routes: Routes =[
   {
@@ -23,7 +24,8 @@ const routes: Routes =[
     children: [
       {
         path: '',
-        loadChildren: () => import('src/app/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
+        loadChildren: () => import('src/app/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule),
+        
       }
     ]
   }, {
@@ -48,7 +50,8 @@ const routes: Routes =[
     BrowserModule,
     RouterModule.forRoot(routes,{
       useHash: false
-    })
+    }),
+    
   ],
   exports: [
   ],

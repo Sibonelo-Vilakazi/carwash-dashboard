@@ -55,6 +55,7 @@ export class BranchAddDeleteComponent implements OnInit {
     this.dataAccessService.getServicePackagesByBusinessId(this.businessId ?? '').subscribe({
       next: (res) => {
         this.servicePackages = res;
+        console.log(this.servicePackages)
       },
       error: (err) =>{
         console.error(err);
@@ -145,18 +146,19 @@ export class BranchAddDeleteComponent implements OnInit {
 
   getChecked(id: string){
     const serviceArray = (this.branchForm.get('services') as FormArray);
-    console.log('serviceArray.value.findIndex(x => x.service_id === id): ', id);
-    return (serviceArray).controls.findIndex((x: any) => x.get('service_id') === id) >= 0;
+    console.log('serviceArray.value.findIndex(x => x.service_id === id): ', serviceArray);
+    return (serviceArray).controls.findIndex((x: any) => x.value['service_id'] === id) >= 0;
   }
 
 
   handleUpdate() {
     const branch: Branch = this.branchForm.value as unknown as Branch;
-
+    branch.services = Array.from(
+      new Map(branch.services.map(service => [service.service_id, service])).values()
+    );
     branch.services = branch.services.map((service) => {
-      return this.servicePackages.find((item) => item.service_id ===service.service_id);
+      return this.servicePackages.find((item) => item.service_id ===service.service_id);  
     });
-
     this.dataAccessService.createBranches(branch as any).subscribe({
       next: (res: any) =>{
         this.toastrService.success('You have successfully updated a branch');
@@ -177,6 +179,9 @@ export class BranchAddDeleteComponent implements OnInit {
     data.userId = this.userId;
     data.users =[this.userId];
     data.businessId = this.businessId;
+    data.services = data.services.map((service) => {
+      return this.servicePackages.find((item) => item.service_id === service.service_id);
+    });
     this.dataAccessService.createBranches(data as any).subscribe({
       next: (res: any) =>{
         this.toastrService.success('You have successfully create a branch');
