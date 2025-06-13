@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
     
     this.dataAccessService.getYearlyRevenueByBusinessId(businessId, year).subscribe({
       next: (res: YearlyRevenueData) => {
-        console.log('res: ', res);
+        
         const salesAmounts =  [];
         this.datasets[1] = []
         Object.keys(res).map((key) =>{

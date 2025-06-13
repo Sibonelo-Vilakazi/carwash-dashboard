@@ -8,7 +8,17 @@
       <!-- <li><span class="icon cross">&#10006;</span> Lorem ipsum dolor sit amet</li> -->
       
     </ul>
-    <button (click)="handleMakePurchase()" class="select-button">Subscribe
+    <button [disabled]="currentSubscription && currentSubscription.subscriptionId === data.id && !isPaymentValid()" (click)="handleMakePurchase()" class="select-button">
+      <ng-container *ngIf="currentSubscription && currentSubscription.subscriptionId !== data.id">
+        Upgrade subscription
+      </ng-container>
+      <ng-container *ngIf="!currentSubscription">
+        Subscribe
+      </ng-container>
+
+      <ng-container *ngIf="(currentSubscription && currentSubscription.subscriptionId === data.id) ">
+        Pay now
+      </ng-container>
       
     </button>
   </div>

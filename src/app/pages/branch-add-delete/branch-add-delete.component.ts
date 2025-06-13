@@ -55,7 +55,7 @@ export class BranchAddDeleteComponent implements OnInit {
     this.dataAccessService.getServicePackagesByBusinessId(this.businessId ?? '').subscribe({
       next: (res) => {
         this.servicePackages = res;
-        console.log(this.servicePackages)
+        
       },
       error: (err) =>{
         console.error(err);
@@ -95,7 +95,6 @@ export class BranchAddDeleteComponent implements OnInit {
                 }))
               );
               
-              console.log('res: ', this.branchForm.value);
               this.isEdit = true;
             },
             error: (err: any) =>{
@@ -146,7 +145,6 @@ export class BranchAddDeleteComponent implements OnInit {
 
   getChecked(id: string){
     const serviceArray = (this.branchForm.get('services') as FormArray);
-    console.log('serviceArray.value.findIndex(x => x.service_id === id): ', serviceArray);
     return (serviceArray).controls.findIndex((x: any) => x.value['service_id'] === id) >= 0;
   }
 

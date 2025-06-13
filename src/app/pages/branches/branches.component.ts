@@ -42,14 +42,13 @@ export class BranchesComponent implements OnInit {
   }
 
   checkSubscriptionStatus() {
+    console.log(this.businessId)
     this.subscriptionService.checkSubscriptionStatus(this.businessId).subscribe({
       next: (res: SubscriptionStatusResponse) =>{
-        console.log({res});
-        console.log(res.data.includedBranches , (this.branches.length + 1));
-        
+
 
           if (res.data.includedBranches < (this.branches.length + 1)) {
-            // console.log("Subscription is active");
+           
             const modalRef = this.modalService.open(ConfirmationModalComponent, {
               windowClass: 'confirmation-modal',
               size: 'lg',
@@ -63,7 +62,7 @@ export class BranchesComponent implements OnInit {
             } as ConfirmationModal;
 
             modalRef.dismissed.subscribe((result) => {
-              console.log({result})
+           
               if(result === 'confirm') {
                 
                
@@ -76,7 +75,7 @@ export class BranchesComponent implements OnInit {
         
       },
       error: (err) => {
-        console.log(' data: ', err.error);
+        console.log('eerr: ', err)
         // this.router.navigateByUrl('purchase-subscription');
       } 
     });

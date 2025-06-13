@@ -20,6 +20,10 @@ import { BookingDetailComponent } from 'src/app/pages/booking-detail/booking-det
 import { BranchAddDeleteComponent } from 'src/app/pages/branch-add-delete/branch-add-delete.component';
 import { PurchaseSubscriptionComponent } from 'src/app/pages/purchase-subscription/purchase-subscription.component';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { AuthService } from 'src/app/services/auth.service';
+import { SubscriptionService } from 'src/app/services/subscription.service';
+import { BranchesComponent } from 'src/app/pages/branches/branches.component';
+import { GenericHttpService } from 'src/app/services/generic-http.service';
 
 @NgModule({
   imports: [
@@ -44,9 +48,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     DeleteModalComponent,
     BookingDetailComponent,
     BranchAddDeleteComponent,
-    PurchaseSubscriptionComponent,
+    PurchaseSubscriptionComponent, BranchesComponent
   ],
-  providers: [ToastrService]
+  providers: [ToastrService, AuthService, SubscriptionService, GenericHttpService]
 })
 
 export class AdminLayoutModule {}

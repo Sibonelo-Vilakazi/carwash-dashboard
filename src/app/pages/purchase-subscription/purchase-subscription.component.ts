@@ -23,7 +23,7 @@ export class PurchaseSubscriptionComponent implements OnInit {
     this.subscriptionData = [];
     this.subscriptionService.getSubscriptions().subscribe({
       next: (res: SubscriptionData[]) =>{
-        console.log({res});
+   
         this.subscriptionData = res;
       },
       error: (err: any) => {
@@ -35,7 +35,7 @@ export class PurchaseSubscriptionComponent implements OnInit {
 
   handleSubscription($event: InitializeSubscriptionData){
     this.isLoadingPayment = true; 
-
+    $event.isUpgrade = false;
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
       windowClass: 'confirmation-modal',
       size: 'lg',
@@ -49,7 +49,7 @@ export class PurchaseSubscriptionComponent implements OnInit {
     } as ConfirmationModal;
     
     modalRef.dismissed.subscribe((result) => {
-      console.log({result})
+
       if(result === 'confirm') {
         this.initilaizePayment($event);
        

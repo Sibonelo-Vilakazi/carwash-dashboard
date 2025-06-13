@@ -22,18 +22,18 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'tables',         component: TablesComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
-    { path: 'service-packages',     component: ServicePackagesComponent, canActivate: [AuthGuard] },
-    { path: 'service-package/edit/:service_id',     component: PackageDetailComponent, canActivate: [AuthGuard] },
-    { path: 'service-package/create',     component: PackageDetailComponent,canActivate: [AuthGuard] },
-    { path: 'bookings',     component: BookingsComponent, canActivate: [AuthGuard]},
-    { path: 'booking/edit/:bookingId',     component: BookingDetailComponent, canActivate: [AuthGuard] },
-    { path: 'booking/create',     component: BookingDetailComponent, canActivate: [AuthGuard] },
-    { path: 'branch/create',     component: BranchAddDeleteComponent, canActivate: [AuthGuard] },
-    { path: 'branch/edit/:branchId',     component: BranchAddDeleteComponent, canActivate: [AuthGuard] },
+    { path: 'service-packages',     component: ServicePackagesComponent, canActivate: [AuthGuard, SubscriptionGuard] },
+    { path: 'service-package/edit/:service_id',     component: PackageDetailComponent, canActivate: [AuthGuard, SubscriptionGuard] },
+    { path: 'service-package/create',     component: PackageDetailComponent,canActivate: [AuthGuard, SubscriptionGuard] },
+    { path: 'bookings',     component: BookingsComponent, canActivate: [AuthGuard, SubscriptionGuard]},
+    { path: 'booking/edit/:bookingId',     component: BookingDetailComponent, canActivate: [AuthGuard, SubscriptionGuard] },
+    { path: 'booking/create',     component: BookingDetailComponent, canActivate: [AuthGuard, SubscriptionGuard] },
+    { path: 'branch/create',     component: BranchAddDeleteComponent, canActivate: [AuthGuard, SubscriptionGuard] },
+    { path: 'branch/edit/:branchId',     component: BranchAddDeleteComponent, canActivate: [AuthGuard, SubscriptionGuard] },
     { path: 'cars',     component: NavbarComponent},
-    { path: 'branches', component: BranchesComponent},
-    { path: 'branch/edit/:branchId', component: BranchAddDeleteComponent, canActivate: [AuthGuard]},
-    { path: 'purchase-subscription', component: PurchaseSubscriptionComponent, canActivate: [AuthGuard]}
+    { path: 'branches', component: BranchesComponent, canActivate: [AuthGuard, SubscriptionGuard]},
+    { path: 'branch/edit/:branchId', component: BranchAddDeleteComponent, canActivate: [AuthGuard, SubscriptionGuard]},
+    { path: 'purchase-subscription', component: PurchaseSubscriptionComponent, canActivate: [AuthGuard, SubscriptionGuard]}
     
 
 ];

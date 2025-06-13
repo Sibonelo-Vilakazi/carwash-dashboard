@@ -34,10 +34,9 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     const businessId = this.authService.getUserFromLocalStorage().data.businessId;
-    console.log({businessId})
+    
     this.dataAccessService.getBusinessById(businessId).subscribe({
       next: (res: BusinessDto) =>{
-        console.log('res: ', res)
         this.businessData = res;
         this.isEdit = true;
 
@@ -64,7 +63,6 @@ export class UserProfileComponent implements OnInit {
 
   onSubmit(): void {
     const user_id: string = this.authService.getUserFromLocalStorage().data.user_id;
-    console.log('user: ',this.businessForm.value)
     if (this.businessForm.invalid) {
       this.markFormGroupTouched(this.businessForm);
       return;

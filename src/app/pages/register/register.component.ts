@@ -41,8 +41,8 @@ export class RegisterComponent implements OnInit {
       error: (err: any) => {
         console.error(err);
       }
-    })
-    console.log('value: ', this.registerForm.value)
+    });
+    
   }
 
   createBusiness(user_id: string) {

@@ -3,7 +3,7 @@ import { Observable, map, of } from 'rxjs';
 import { GenericHttpService } from './generic-http.service';
 import { Endpoints } from '../endpoints/Endpoints';
 import { InitializeSubscriptionData } from '../interfaces/models/initialize-subscription-data.interface';
-import { SubscriptionStatusResponse } from '../interfaces/models/subscription-status-response.interface';
+import { SubscriptionStatusResponse, SubscriptionStatusResponseData } from '../interfaces/models/subscription-status-response.interface';
 import { SubscriptionData } from '../interfaces/models/subscription-data.interface';
 
 @Injectable({
@@ -11,6 +11,7 @@ import { SubscriptionData } from '../interfaces/models/subscription-data.interfa
 })
 export class SubscriptionService {
   isActiveCache: boolean = false;
+  SUBSCRIBPTION = 'subscription';
 
   constructor(private generic: GenericHttpService) { }
 
@@ -18,7 +19,7 @@ export class SubscriptionService {
     return this.generic.httpGet(Endpoints.SUBSCRIPTION_STATUS(businessId))
       .pipe(
         map(response => {
-          this.isActiveCache = response.isActive;
+          //this.isActiveCache = response.isActive;
           return response;
         })
       );
@@ -31,5 +32,13 @@ export class SubscriptionService {
 
   getSubscriptions (): Observable<SubscriptionData[]> { 
     return this.generic.httpGet(Endpoints.GET_SUBSCRIPTIONS);
+  }
+
+  setSubscriptionSession(data: SubscriptionStatusResponseData) {
+    sessionStorage.setItem(this.SUBSCRIBPTION, JSON.stringify(data));
+  }
+
+  getSubscriptionSession(): SubscriptionStatusResponseData {
+    return JSON.parse(sessionStorage.getItem(this.SUBSCRIBPTION)) as SubscriptionStatusResponseData
   }
 }

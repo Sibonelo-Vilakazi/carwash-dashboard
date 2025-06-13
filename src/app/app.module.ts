@@ -25,6 +25,8 @@ import { environment } from 'src/environments/environment';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { BranchesComponent } from './pages/branches/branches.component';
 import { BranchAddDeleteComponent } from './pages/branch-add-delete/branch-add-delete.component';
+import { SubscriptionService } from './services/subscription.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   imports: [
@@ -47,9 +49,9 @@ import { BranchAddDeleteComponent } from './pages/branch-add-delete/branch-add-d
     AdminLayoutComponent,
     AuthLayoutComponent,
     BookingsComponent,
-    BranchesComponent,
+    
   ],
-  providers: [ToastrService],
+  providers: [ToastrService, SubscriptionService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
