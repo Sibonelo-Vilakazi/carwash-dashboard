@@ -35,7 +35,7 @@ export class PurchaseSubscriptionComponent implements OnInit {
 
   handleSubscription($event: InitializeSubscriptionData){
     this.isLoadingPayment = true; 
-    $event.isUpgrade = false;
+    // $event.isUpgrade = false;
     const modalRef = this.modalService.open(ConfirmationModalComponent, {
       windowClass: 'confirmation-modal',
       size: 'lg',

@@ -44,7 +44,7 @@
                   <th scope="col">Location</th>
                   <th scope="col">Start Time</th>
                   <th scope="col">End Time</th>
-                  <!-- <th scope="col">Status</th> -->
+                  <th scope="col">Status</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -60,11 +60,14 @@
                   <td>{{branch.location}}</td>
                   <td>{{branch.startTime}}</td>
                   <td>{{branch.endTime}}</td>
-                  <!-- <td>
-                    <span class="badge badge-dot mr-4">
-                      <i [class]="getStatusIcon(branch.status)"></i> {{branch.status}}
-                    </span>
-                  </td> -->
+                  <td>
+                    <div *ngIf="branch.status" class="col text-right">
+                      <a href="#!" class="btn btn-success">Active</a>
+                    </div>
+                    <div *ngIf="!branch.status" class="col text-right">
+                      <a href="#!" class="btn btn-danger">Deactivatd</a>
+                    </div>
+                  </td>
                   <td class="text-right">
                     <div ngbDropdown placement="bottom-right">
                       <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>

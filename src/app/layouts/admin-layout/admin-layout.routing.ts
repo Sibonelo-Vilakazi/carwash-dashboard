@@ -15,6 +15,8 @@ import { BranchesComponent } from 'src/app/pages/branches/branches.component';
 import { BranchAddDeleteComponent } from 'src/app/pages/branch-add-delete/branch-add-delete.component';
 import { SubscriptionGuard } from 'src/app/guards/subscription.guard';
 import { PurchaseSubscriptionComponent } from 'src/app/pages/purchase-subscription/purchase-subscription.component';
+import { PaymentStatusComponent } from 'src/app/pages/payment-status/payment-status.component';
+import { PaymentHistoryComponent } from 'src/app/pages/payment-history/payment-history.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent, canActivate: [AuthGuard, SubscriptionGuard] },
@@ -33,7 +35,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'cars',     component: NavbarComponent},
     { path: 'branches', component: BranchesComponent, canActivate: [AuthGuard, SubscriptionGuard]},
     { path: 'branch/edit/:branchId', component: BranchAddDeleteComponent, canActivate: [AuthGuard, SubscriptionGuard]},
-    { path: 'purchase-subscription', component: PurchaseSubscriptionComponent, canActivate: [AuthGuard, SubscriptionGuard]}
+    { path: 'purchase-subscription', component: PurchaseSubscriptionComponent, canActivate: [AuthGuard, SubscriptionGuard]},
+    { path: 'payment/:status', component: PaymentStatusComponent, canActivate: [AuthGuard, SubscriptionGuard]},
+    { path: 'payment-history', component: PaymentHistoryComponent, canActivate: [AuthGuard, SubscriptionGuard]}
     
 
 ];

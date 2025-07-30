@@ -27,6 +27,8 @@ import { BranchesComponent } from './pages/branches/branches.component';
 import { BranchAddDeleteComponent } from './pages/branch-add-delete/branch-add-delete.component';
 import { SubscriptionService } from './services/subscription.service';
 import { AuthService } from './services/auth.service';
+import { PaymentStatusComponent } from './pages/payment-status/payment-status.component';
+import { PaymentHistoryComponent } from './pages/payment-history/payment-history.component';
 
 @NgModule({
   imports: [
@@ -49,6 +51,8 @@ import { AuthService } from './services/auth.service';
     AdminLayoutComponent,
     AuthLayoutComponent,
     BookingsComponent,
+    PaymentStatusComponent,
+    PaymentHistoryComponent,
     
   ],
   providers: [ToastrService, SubscriptionService, AuthService],

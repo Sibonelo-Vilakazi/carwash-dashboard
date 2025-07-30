@@ -1,0 +1,20 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
+    <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div [ngClass]="{'error': !isSuccessfullPayment}" class="payment-status-container">
+
+            <div class="icon-section">
+                <i *ngIf="isSuccessfullPayment" class="fa fa-check-circle" aria-hidden="true"></i>
+                <i *ngIf="!isSuccessfullPayment" class="fa fa-times-circle" aria-hidden="true"></i>
+                
+            </div>
+        
+            <div class="content-section">
+                <h1 [ngClass]="{'failedHeader': !isSuccessfullPayment}">{{paymentHeading}}</h1>
+                <span>{{paymentDescription}}</span>
+            </div>
+        </div>
+    </div>
+</div>

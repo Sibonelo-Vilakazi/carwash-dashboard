@@ -7,6 +7,7 @@ declare interface RouteInfo {
     title: string;
     icon: string;
     class: string;
+    isHidden?: boolean;
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
@@ -19,8 +20,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/user-profile', title: 'Business Profile',  icon:'ni-single-02 text-yellow', class: '' },
     { path: '/branches', title: 'Branches',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/purchase-subscription', title: 'Subscriptions',  icon:'ni-bullet-list-67 text-red', class: '' },
-    // { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '' },
-    // { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '' }
+    { path: "/payment/complete", title: 'Payment Status',  icon:'ni-bullet-list-67 text-red', class: '', isHidden: true}
 ];
 
 @Component({

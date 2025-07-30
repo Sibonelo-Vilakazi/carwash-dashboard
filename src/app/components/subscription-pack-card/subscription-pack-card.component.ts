@@ -32,10 +32,13 @@ export class SubscriptionPackCardComponent implements OnInit {
       subscriptionId: this.data.id,
       isUpgrade: false
     }
+    console.log('value: ', this.data.id);
+    console.log('{}', this.currentSubscription, '');
+    console.log(this.currentSubscription && this.currentSubscription.subscriptionId !== this.data.id);
 
-    if(this.currentSubscription &&this.currentSubscription.subscriptionId !== this.data.id &&
-      this.currentSubscription.totalPrice < this.data.price){
+    if(this.currentSubscription && this.currentSubscription.subscriptionId !== this.data.id){
       subData.isUpgrade = true;
+      console.log('sub: ',subData);
     }
 
     this.selectSub.emit(subData);
